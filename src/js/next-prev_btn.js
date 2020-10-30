@@ -3,10 +3,10 @@
 
 const targetBtnRef = document.querySelector('#counter');
 const incrementBtnRef = document.querySelector(
-    "button[data-action='increment']"
+    "button[data-counter='increment']"
 );
 const decrementBtnRef = document.querySelector(
-    "button[data-action='decrement']"
+    "button[data-counter='decrement']"
 );
 const valueRef = document.getElementById('value');
 
