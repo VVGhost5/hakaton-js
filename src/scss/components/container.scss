@@ -1,21 +1,12 @@
 .container {
   margin: 0 auto;
+  width: 320px;
 
-  @media (min-width: 320px) and (max-width: 767px) {
-    width: 100%;
-    padding: 0 10px;
+  @media (min-width: 768px) {
+    width: 768px;
   }
 
-
-  // @media (min-width: 768px) {
-  //   width: 688px;
-  // }
-
-  // @media (min-width: 1280px) {
-  //   width: 1210px;
-  // }
-
-  // @media (min-width: 1680px) {
-  //   width: 1344px;
-  // }
+  @media (min-width: 1024px) {
+    width: 1024px;
+  }
 }
