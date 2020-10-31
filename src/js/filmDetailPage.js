@@ -2,6 +2,16 @@ import receivedFilm from './test.json';
 import receivedFilm2 from './test2.json';
 import createFilmDetailedPage from './createFilmDetailedPage';
 
+let filmsArray = [];
+
+const checkPresenceOfArray = () => {
+    if (localStorage.hasOwnProperty('films')) {
+        return;
+    }
+    localStorage.setItem('films', JSON.stringify(filmsArray));
+}
+
+checkPresenceOfArray();
 createFilmDetailedPage(receivedFilm);
 
 const refs = {
@@ -9,28 +19,12 @@ ToWatchedButtonRef: document.getElementById('js-button-to-watched'),
 ToQueueButtonRef: document.getElementById('js-button-to-queue'),
 }
 
-console.log(refs.ToWatchedButtonRef);
-
 let filmStatus = {
-    isAddedToWatched: null,
-    isAddedToQueue: null,
+    isAddedToWatched: false,
+    isAddedToQueue: false,
 };
 
-let filmsArray = [];
 
-console.log(receivedFilm);
-
-let FilmToLocalStorage = { ...receivedFilm, ...filmStatus };
-
-filmsArray = [...FilmToLocalStorage];
-
-console.log(filmsArray);
-
-console.log(FilmToLocalStorage);
-
-let isWatched = JSON.parse(localStorage.getItem('films'));
-
-console.log(isWatched);
 
 const setToAddedToWatchedByDefault = () => {
     refs.ToWatchedButtonRef.textContent = "Remove from watched";
@@ -45,15 +39,18 @@ const setToNotAddedToWatchedByDefault = () => {
 const setToAddedToWatched = () => {
     refs.ToWatchedButtonRef.textContent = "Remove from watched";
     refs.ToWatchedButtonRef.classList.add('AddedToWatched');
+    let FilmToLocalStorage = { ...receivedFilm, ...filmStatus };
+    let arrayFromLocalStorage = JSON.parse(localStorage.getItem('films'));
     FilmToLocalStorage.isAddedToWatched = true;
-    localStorage.setItem('films', JSON.stringify(filmsArray));
+    arrayFromLocalStorage.push(FilmToLocalStorage);
+    localStorage.setItem('films', JSON.stringify(arrayFromLocalStorage));
+    
 }
 
 const setToNotAddedToWatched = () => {
     refs.ToWatchedButtonRef.textContent = "Add to watched";
     refs.ToWatchedButtonRef.classList.remove('AddedToWatched');
-    FilmToLocalStorage.isAddedToWatched = false;
-    localStorage.setItem('films', JSON.stringify(filmsArray));
+    // localStorage.setItem('films', JSON.stringify(filmsArray));
 }
 
 const clearFilmFromLocalStorage = () => {
@@ -61,26 +58,27 @@ const clearFilmFromLocalStorage = () => {
 }
 
 const checkTheStatusOfFilm = (receivedFilm) => {
-    let findedFilm = filmsArray.find(obj => obj.id === receivedFilm.id);
-    console.log(`!!!!!!!!!!!!! ${findedFilm.isAddedToWatched}`);
-    if (findedFilm.isAddedToWatched) {
-        console.log('NOT ADDED');
-         setToNotAddedToWatchedByDefault();
-    } else {
-        setToAddedToWatchedByDefault();
-        console.log('ADDED');
+    let foundFilm = JSON.parse(localStorage.getItem('films')).find(obj => obj.id === receivedFilm.id);
+    console.log(foundFilm);
+    if (!foundFilm) {
+        return;
     }
-    
+    if (foundFilm.isAddedToWatched) {
+        console.log('Found Film already added');
+        setToAddedToWatchedByDefault();
+        return;
+    }
+        setToNotAddedToWatchedByDefault();
 }
 
 const handleToWatched = () => {
     if (!refs.ToWatchedButtonRef.classList.contains('AddedToWatched')) {
         setToAddedToWatched();
-    } else {
+        return;
+    } 
         setToNotAddedToWatched();
     }
 
-}
 
 checkTheStatusOfFilm(receivedFilm);
 
