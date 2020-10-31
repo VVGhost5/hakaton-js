@@ -1,4 +1,3 @@
-<!--Коммит Ростислава -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,124 +8,52 @@
   </head>
 
   <body>
-    <header class="header">
-      <div class="container">
+    <div class="container">
+      <header class="header">
         <nav class="header__nav">
-          <div class="logo"><img src="images/icon-filmoteka.png">
+          <div class="logo">
+            <img src="images/icon-filmoteka.png" />
             <a href="/">
               <i class="fa fa-film"></i>
               <span class="span">Filmoteka</span>
             </a>
           </div>
           <ul class="site-navigation">
-            <li class="site-navigation__item"><a href="#" class="site-navigation__link active">Home</a></li>
-            <li class="site-navigation__item"><a href="#" class="site-navigation__link">My library</a></li>
+            <li class="site-navigation__item">
+              <a href="#" class="site-navigation__link active">Home</a>
+            </li>
+            <li class="site-navigation__item">
+              <a href="#" class="site-navigation__link">My library</a>
+            </li>
           </ul>
         </nav>
+      </header>
+
+      <!-- Перед роутінгом перенeстити в hbs -->
+      <div class="container">
+        <div class="input-wrapper">
+          <form action="#" class="search-form container">
+            <input
+              class="input"
+              type="text"
+              name="name"
+              placeholder="Write movie name and click Enter"
+            />
+          </form>
+        </div>
+        <ul class="films"></ul>
       </div>
-    </header>
-  <div class="main">
-    <div class="container">
 
-<!-- Коммит Коли -->
- <section class="gallery">
+      <!-- Перед роутінгом перенeстити в hbs -->
+      <section class="gallery">
         <div class="container">
-          <ul class="gallery-list">
-            <li class='gallery-item'>
-
-              <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-              <p class="gallery-item__name">Темные времена(2017)</p>
-              <p class="gallery-item__rating">6.5</p>
-          
-          </li>
-          <li class='gallery-item'>
-
-            <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-            <p class="gallery-item__name">Темные времена(2017)</p>
-            <p class="gallery-item__rating">6.5</p>
-        
-        </li>
-        <li class='gallery-item'>
-
-          <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-          <p class="gallery-item__name">Темные времена(2017)</p>
-          <p class="gallery-item__rating">6.5</p>
-      
-      </li>
-      <li class='gallery-item'>
-
-        <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-        <p class="gallery-item__name">Темные времена(2017)</p>
-        <p class="gallery-item__rating">6.5</p>
-    
-    </li>
-    <li class='gallery-item'>
-
-      <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-      <p class="gallery-item__name">Темные времена(2017)</p>
-      <p class="gallery-item__rating">6.5</p>
-  
-  </li>
-  <li class='gallery-item'>
-
-    <img src="https://cdn.pixabay.com/photo/2019/10/24/02/18/halloween-4573176_960_720.jpg" alt="#" class="gallery-item__image" width="" height="">
-    <p class="gallery-item__name">Темные времена(2017)</p>
-    <p class="gallery-item__rating">6.5</p>
-
-</li>
-
-          </ul>
+          <ul class="gallery-list"></ul>
         </div>
       </section>
-<!-- Коммит Коли -->
 
-      <!-- Коммит Андрея -->
-  <body class="container">
-    
-      <div class="main">
-    <div class="input-wrapper">
-      <form action="#" class="search-form container">
-        <input class="input" type="text" name="name" placeholder="Write movie name and click Enter" />
-      </form>
+      <footer class="footer">
+        <div class="footer-copyright">Made by GroupName</div>
+      </footer>
     </div>
-<ul class="films">
-  
-</ul>
-  </div>
-    <!-- Коммит Захара -->
-    <main>
-      <div id="counter" class="btn_wrapper">
-        <button type="button" data-counter="decrement" class="prev-next">Prev</button>
-        <span id="value" class="value" value='1'>1</span>
-        <button type="button" data-counter="increment" class="prev-next">Next</button>
-      </div>
-    </main>
-    <!-- Коммит Захара -->
-    
-    <!-- Коммит Серёжи -->
-    <main>
-      <section class="watch-queue">       
-        <ul class="watch-queue-link">
-          <li><a href="/watch" class="watch-queue-link__item watch-js is-active">Watched</a></li>
-          <li><a href="/queue" class="watch-queue-link__item queue-js">Queue</a></li>
-        </ul>           
-      </section>
-
-      <section class="library"></section>
-
-    </main>
-     <!-- Коммит Серёжи -->
-  </body>
-      <!-- Коммит Андрея -->
-    </div>
-
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-copyright">Made by GroupName</div>
-    </div>
-  </footer>
   </body>
 </html>
-<!--Коммит Ростислава -->
-
