@@ -1,0 +1,49 @@
+<section class="details-section">
+    <div class="details">
+        <div class="details__image-block">
+            <img src="https://cdn.pixabay.com/photo/2019/06/03/02/54/smoke-and-mirrors-4248008_960_720.jpg"
+                alt="{{title}} poster" class="details__image-block-image">
+        </div>
+        <div class="details__info-block">
+            <h2 class="details__info-block-title">{{title}} (<span class="year"></span>)</h2>
+            <ul class="details__info-block-list">
+                <li class="details__info-block-list-item">
+                    <p class="details__info-block-list-item-name">vote/votes</p>
+                    <p class="details__info-block-list-item-value">{{vote_average}}/{{vote_count}}</p>
+                </li>
+
+                <li class="details__info-block-list-item">
+                    <p class="details__info-block-list-item-name">popularity</p>
+                    <p class="details__info-block-list-item-value">{{popularity}}</p>
+                </li>
+
+                <li class="details__info-block-list-item">
+                    <p class="details__info-block-list-item-name">Original title</p>
+                    <p class="details__info-block-list-item-value">{{title}}</p>
+                </li>
+
+                <li class="details__info-block-list-item">
+                    <p class="details__info-block-list-item-name">Genres</p>
+                    <ul class="details__info-block-list-item-value-list">
+                        {{#each this.genres}}
+                        <li class="details__info-block-list-item-value-list-item">{{this.name}}</li>
+                        {{/each}}
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="details__info-block-title">About</h3>
+            <p class="details__info-block-about-description">{{overview}}</p>
+            <div class="details__info-block-button-block">
+                <button
+                    class="details__info-block-button-block-button details__info-block-button-block-button-to-watched"
+                    id="js-button-to-watched">Add
+                    to watched</button>
+
+                <button class="details__info-block-button-block-button details__info-block-button-block-button-to-queue"
+                    id="js-button-to-queue">Add
+                    to queue</button>
+            </div>
+        </div>
+    </div>
+</section>
