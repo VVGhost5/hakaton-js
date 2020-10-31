@@ -1,10 +1,8 @@
-import './js/libraryPage';
+// import './js/libraryPage';
+// import './js/watch-and-queue-render';
 import './styles.css';
-import './scss/base.scss'
-import './scss/components/next-prev_btn.scss'
-import './js/next-prev_btn'
-import './js/search-section'
-import './js/filmDetailPage'
-import './sass/main.scss';
-// import './template/gallery.hbs';
-// import './js/gallery.js';
+import './scss/base.scss';
+import './scss/components/next-prev_btn.scss';
+// import './js/next-prev_btn';
+import './js/search-section';
+// import './js/filmDetailPage';

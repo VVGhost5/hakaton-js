@@ -1,3 +1,5 @@
+import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
+
 const refs = {
   form: document.querySelector('.search-form'),
   inputFilms: document.querySelector('.input'),
@@ -22,9 +24,10 @@ const searchFilms = event => {
   inputValue = refs.inputFilms.value;
   fetchFilms(inputValue).then(data => {
     if (data.total_results !== 0) {
+      createHomepageFilmGalleryMarkup(data.results);
       console.log(data.results);
     } else {
-        console.log('нет такого фильма')
+      console.log('нет такого фильма');
     }
   });
   // В дальнейшем console.log(data.results) заменяется на createCardFunc
@@ -32,5 +35,3 @@ const searchFilms = event => {
 };
 
 refs.form.addEventListener('submit', searchFilms);
-
-
