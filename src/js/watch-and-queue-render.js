@@ -7,4 +7,3 @@ function createWatchAndQueueSectionMarkup() {
   containerRef.insertAdjacentHTML('beforeend', markupWatchQueueSection);
 }
 
-createWatchAndQueueSectionMarkup();
