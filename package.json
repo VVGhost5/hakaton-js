@@ -53,6 +53,7 @@
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
     "normalize-scss": "^7.0.1",
+    "pnotify": "^5.1.2",
     "routerjs": "^2.4.5"
   }
 }

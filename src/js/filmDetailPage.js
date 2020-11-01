@@ -2,6 +2,7 @@ import receivedFilm from './test.json';
 import receivedFilm2 from './test2.json';
 import receivedFilm3 from './test3.json';
 import createFilmDetailedPage from './createFilmDetailedPage';
+import showNotification from './notification';
 
 const handleFilmDetailPage = (receivedFilm) => {
 
@@ -44,27 +45,35 @@ const setButtonRemoveFromQueue = () => {
     refs.ToQueueButtonRef.classList.remove('AddedToQueue');
 }
 
-const setToAddedToWatched = () => {
-    setButtonAddToWatched();
+    const setButtonValue = (event, textContent) => {
+        event.target.textContent = textContent;
+};
+
+const setToAddedToWatched = (event) => {
+    setButtonValue(event, 'Remove from watched');
+    event.target.classList.add('AddedToWatched');
     arrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
     arrayFromLocalStorage.push(receivedFilm);
     localStorage.setItem('filmsWatched', JSON.stringify(arrayFromLocalStorage));   
 }
 
-const setToAddedToQueue = () => {
-    setButtonAddToQueue();
+const setToAddedToQueue = (event) => {
+    setButtonValue(event, 'Remove from queue');
+    event.target.classList.add('AddedToQueue');
     arrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsQueue'));
     arrayFromLocalStorage.push(receivedFilm);
     localStorage.setItem('filmsQueue', JSON.stringify(arrayFromLocalStorage));   
 }
 
-const setToNotAddedToWatched = () => {
-    setButtonRemoveFromWatched();
+const setToNotAddedToWatched = (event) => {
+    setButtonValue(event, 'Add to watched');
+    event.target.classList.remove('AddedToWatched');
     clearFilmWatchedFromLocalStorage(receivedFilm);
 }
 
-const setToNotAddedToQueue = () => {
-    setButtonRemoveFromQueue();
+const setToNotAddedToQueue = (event) => {
+    setButtonValue(event, 'Add to queue');
+    event.target.classList.remove('AddedToQueue');
     clearFilmQueueFromLocalStorage(receivedFilm);
 }
 
@@ -107,28 +116,32 @@ const checkTheStatusOfQueueFilm = (receivedFilm) => {
     setButtonAddToQueue();
 };
  
-const handleToWatched = () => {
-    if (!refs.ToWatchedButtonRef.classList.contains('AddedToWatched')) {
-        setToAddedToWatched();
+    const handleToWatched = (event) => {
+        if (!event.target.classList.contains('AddedToWatched')) {
+        showNotification('Added to watched !');
+        setToAddedToWatched(event);
         return;
-    } 
-        setToNotAddedToWatched();
+        } 
+        showNotification('Removed from watched !');
+        setToNotAddedToWatched(event);
 }
     
-const handleToQueue = () => {
-    if (!refs.ToQueueButtonRef.classList.contains('AddedToQueue')) {
-        setToAddedToQueue();
+const handleToQueue = (event) => {
+    if (!event.target.classList.contains('AddedToQueue')) {
+        showNotification('Added to queue !');
+        setToAddedToQueue(event);
         return;
     } 
-        setToNotAddedToQueue();
+        showNotification('Removed from queue !');
+        setToNotAddedToQueue(event);
     }
 
 checkTheStatusOfWatchedFilm(receivedFilm);
 checkTheStatusOfQueueFilm(receivedFilm);
 
 
-refs.ToWatchedButtonRef.addEventListener('click', handleToWatched);
-refs.ToQueueButtonRef.addEventListener('click', handleToQueue);
+refs.ToWatchedButtonRef.addEventListener('click', (event => handleToWatched(event)));
+refs.ToQueueButtonRef.addEventListener('click', (event => handleToQueue(event)));
 }
 
 handleFilmDetailPage(receivedFilm3);
