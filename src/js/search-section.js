@@ -9,8 +9,6 @@ export default {
     return fetch(url)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-
         return data;
       });
   },
