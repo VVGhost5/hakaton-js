@@ -8,52 +8,54 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav class="header__nav">
-          <div class="logo">
-            <img src="images/icon-filmoteka.png" />
-            <a href="/">
-              <i class="fa fa-film"></i>
-              <span class="span">Filmoteka</span>
-            </a>
-          </div>
-          <ul class="site-navigation">
-            <li class="site-navigation__item">
-              <a href="#" class="site-navigation__link active">Home</a>
-            </li>
-            <li class="site-navigation__item">
-              <a href="#" class="site-navigation__link">My library</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      <!-- Перед роутінгом перенeстити в hbs -->
-      <div class="container">
-        <div class="input-wrapper">
-          <form action="#" class="search-form container">
-            <input
-              class="input"
-              type="text"
-              name="name"
-              placeholder="Write movie name and click Enter"
-            />
-          </form>
+  <div class="container wrapper">
+    <header class="header">
+      <nav class="header__nav">
+        <div class="logo">
+          <img src="images/icon-filmoteka.png" />
+          <a href="/">
+            <i class="fa fa-film"></i>
+            <span class="span">Filmoteka</span>
+          </a>
         </div>
-        <ul class="films"></ul>
+        <ul class="site-navigation">
+          <li class="site-navigation__item">
+            <a href="#" class="site-navigation__link active">Home</a>
+          </li>
+          <li class="site-navigation__item">
+            <a href="#" class="site-navigation__link">My library</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  
+    <!-- Перед роутінгом перенeстити в hbs -->
+    <div class="container">
+      <div class="input-wrapper">
+        <form action="#" class="search-form container">
+          <input class="input" type="text" name="query" placeholder="Write movie name and click Enter" />
+        </form>
       </div>
 
-      <!-- Перед роутінгом перенeстити в hbs -->
-      <section class="gallery">
-        <div class="container">
-          <ul class="gallery-list"></ul>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div class="footer-copyright">Made by GroupName</div>
-      </footer>
-    </div>
+    <!-- Перед роутінгом перенeстити в hbs -->
+    <section class="gallery">
+      <div class="container">
+        <ul class="gallery-list"></ul>
+      </div>
+    </section>
+    
+       <ul class="films"></ul>
+      
+     <div id="counter" class="btn_wrapper">
+        <button type="button" data-counter="decrement" class="prev">Prev</button>
+        <span id="value" class="counter_value">1</span>
+        <button type="button" data-counter="increment" class="next">Next</button>
+      </div>
+  
+    <footer class="footer">
+      <div class="footer-copyright">Made by GroupName</div>
+    </footer>
+  </div>
   </body>
 </html>
+
