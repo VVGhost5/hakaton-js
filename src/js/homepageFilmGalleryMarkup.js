@@ -1,4 +1,3 @@
-// import createGalleryMarkup from '../../../goit-js-hw-13-image-finder/src/js/create-gallery-markup';
 import homepageGalleryTpl from '../templates/homepageFilmGallery.hbs';
 
 function createHomepageFilmGalleryMarkup(film) {
