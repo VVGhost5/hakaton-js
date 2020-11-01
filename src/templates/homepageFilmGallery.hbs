@@ -1,6 +1,6 @@
 {{#each this}}
-<li class="gallery-item">
-    <img src="https://image.tmdb.org/t/p/w500/{{backdrop_path}}" alt="{{original_title}}" class="gallery-item__image"
+<li class="gallery-item" data-value="{{id}}">
+    <img src="https://image.tmdb.org/t/p/w500{{backdrop_path}}" alt="{{original_title}}" class="gallery-item__image"
         width="" height="" />
     <p class="gallery-item__name">{{title}}({{release_date}})</p>
     <p class="gallery-item__rating">{{vote_average}}</p>
