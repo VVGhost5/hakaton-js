@@ -1,5 +1,5 @@
-import watch from '../templates/watch-list.hbs';
-import queue from '../templates/queue-list.hbs';
+import watch from '../templates/library-section.hbs';
+import queue from '../templates/library-section.hbs';
 import { createRouter } from 'routerjs';
 
 const watchLinkRef = document.querySelector('.watch-js');
