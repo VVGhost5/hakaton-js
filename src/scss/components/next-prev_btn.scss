@@ -32,8 +32,9 @@ img {
     margin: 15px auto;
 }
 
-.prev-next,
-.value {
+.prev,
+.next,
+.counter_value {
     border-color: rgb(221, 221, 221);
     border-style: solid;
     border-radius: 4px;
@@ -41,12 +42,13 @@ img {
     background-color: rgb(240, 240, 240);
 }
 
-.prev-next {
+.prev,
+.next {
     height: 38px;
     width: 75px;
 }
 
-.value {
+.counter_value {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,5 +57,10 @@ img {
     margin: auto;
 }
 
-  
-  
+.prev {
+    visibility: visible;
+}
+
+.not-visible {
+    visibility: hidden;
+}
