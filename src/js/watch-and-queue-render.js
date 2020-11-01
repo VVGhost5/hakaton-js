@@ -1,4 +1,4 @@
-import watchQueueSectionTpl from '../templates/watch-queue-section.hbs';
+import watchQueueSectionTpl from '../templates/library-section.hbs';
 
 function createWatchAndQueueSectionMarkup() {
   const markupWatchQueueSection = watchQueueSectionTpl();
