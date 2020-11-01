@@ -17,8 +17,8 @@ const router = createRouter()
   })
   .run();
 
-watchLinkRef.addEventListener('click', focusWatch);
-queueLinkRef.addEventListener('click', focusQueue);
+watchLinkRef.addEventListener('click', focusWatchHandler);
+queueLinkRef.addEventListener('click', focusQueueHandler);
 
 function createWatchMarkup() {
   const markupWatch = watch();
@@ -30,13 +30,13 @@ function createQueueMarkup() {
   libraryRef.innerHTML = queueMarkup;
 }
 
-function focusWatch() {
+function focusWatchHandler() {
   watchLinkRef.classList.add('is-active');
   queueLinkRef.classList.remove('is-active');
   localStorage.setItem('focused', 'watch');
 }
 
-function focusQueue() {
+function focusQueueHandler() {
   watchLinkRef.classList.remove('is-active');
   queueLinkRef.classList.add('is-active');
   localStorage.setItem('focused', 'queue');

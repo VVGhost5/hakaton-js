@@ -5,6 +5,7 @@
   background: #76c0ba;
 
   &__nav {
+    width: 100%;
     display: flex;
     align-items: center;
     align-items: center;
@@ -62,11 +63,11 @@
   }
 }
 
-.site-navigation__item:hover .site-navigation__link::after,
-.site-navigation__item:focus .site-navigation__link::after {
-  color: #372c48;
-  width: 122px;
-}
+// .site-navigation__item:hover .site-navigation__link::after,
+// .site-navigation__item:focus .site-navigation__link::after {
+//   color: #372c48;
+//   width: 122px;
+// }
 
 @media (min-width: 768px) {
   .span {
@@ -84,8 +85,6 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .container {
-    width: 964px;
-  }
+.active {
+  border-bottom: 1px solid #372c48;
 }
