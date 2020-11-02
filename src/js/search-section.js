@@ -6,15 +6,13 @@ export default {
   fetchFilms() {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${this.searchQuery}&page=${this.page}`;
 
-    return fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.incrementPage();
-        console.log(this.page);
-
-        return data;
-      });
+    return fetch(url).then(res => {
+      return res.json();
+    });
+    // .then(data => {
+    //   console.log('from search-section', data);
+    //   return data;
+    // });
   },
   resetPage() {
     this.page = 1;
@@ -23,7 +21,7 @@ export default {
     this.page += 1;
   },
   decrementPage() {
-    this.page += 1;
+    this.page -= 1;
   },
   get query() {
     return this.searchQuery;

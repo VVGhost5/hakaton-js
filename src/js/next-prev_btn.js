@@ -1,12 +1,6 @@
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
 
-function requestFilm() {
-  filmService.fetchFilms().then(data => {
-    createHomepageFilmGalleryMarkup(data.results);
-  });
-}
-
 function paginationCounter() {
   const targetBtnRef = document.querySelector('#counter');
   const incrementBtnRef = document.querySelector(
@@ -18,10 +12,14 @@ function paginationCounter() {
   const valueRef = document.getElementById('value');
 
   const valueIncrement = () => {
-    const filmsRef = document.querySelector('.gallery-list');
-    filmsRef.innerHTML = '';
-    requestFilm();
-    valueRef.textContent = filmService.page;
+    filmService.incrementPage();
+    filmService.fetchFilms().then(data => {
+      const filmsRef = document.querySelector('.gallery-list');
+      filmsRef.innerHTML = '';
+      valueRef.textContent = filmService.page;
+      createHomepageFilmGalleryMarkup(data.results);
+      console.log('incr', data);
+    });
 
     if (valueRef.textContent > 1) {
       decrementBtnRef.classList.remove('not-visible');
@@ -29,8 +27,17 @@ function paginationCounter() {
   };
 
   const valueDecrement = () => {
-    --valueRef.textContent;
-    requestFilm();
+    filmService.decrementPage();
+    filmService.fetchFilms().then(data => {
+      const filmsRef = document.querySelector('.gallery-list');
+      filmsRef.innerHTML = '';
+      valueRef.textContent = filmService.page;
+      createHomepageFilmGalleryMarkup(data.results);
+      console.log('decr', data);
+    });
+
+    console.log('PREV CLICKED');
+
     valueRef.textContent = filmService.page;
 
     if (valueRef.textContent < 2) {

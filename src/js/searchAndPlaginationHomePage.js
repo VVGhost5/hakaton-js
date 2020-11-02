@@ -48,6 +48,7 @@ function searchFilms(event) {
       return;
     }
     createHomepageFilmGalleryMarkup(data.results);
+    console.log('data from searchFilm', data);
   });
 
   formRef.reset();
