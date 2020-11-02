@@ -144,4 +144,4 @@ refs.ToWatchedButtonRef.addEventListener('click', (event => handleToWatched(even
 refs.ToQueueButtonRef.addEventListener('click', (event => handleToQueue(event)));
 }
 
-handleFilmDetailPage(receivedFilm3);
+handleFilmDetailPage(receivedFilm);
