@@ -1,3 +1,4 @@
+import changedDamagedImage from './searchAndPlaginationHomePage';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
 
@@ -19,6 +20,7 @@ function paginationCounter() {
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
         valueRef.textContent = filmService.page;
+        changedDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
         if (filmService.pageStatus > 1) {
           decrementBtnRef.classList.remove('not-visible');
@@ -40,6 +42,7 @@ function paginationCounter() {
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
         valueRef.textContent = filmService.page;
+        changedDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
 
         if (filmService.pageStatus <= data.total_pages) {

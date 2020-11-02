@@ -48,20 +48,21 @@ function searchFilms(event) {
   filmService
     .fetchFilms()
     .then(data => {
+      changedDamagedImage(data);
       const results = data.results;
-      results.map(el => {
-        if (el.backdrop_path === null) {
-          return (el.backdrop_path =
-            'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png');
-        }
-        return (el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`);
-      });
+      // results.map(el => {
+      //   if (el.backdrop_path === null) {
+      //     return (el.backdrop_path =
+      //       'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png');
+      //   }
+      //   return (el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`);
+      // });
 
       if (data.total_results === 0) {
         console.log('нет такого фильма');
         return;
       }
-      createHomepageFilmGalleryMarkup(results);
+      createHomepageFilmGalleryMarkup(data.results);
       incrementBtnRef.removeAttribute('disabled');
 
       console.log('data from searchFilm', data);
@@ -94,3 +95,16 @@ function savedFocus() {
     homeLinkRef.classList.remove('active');
   }
 }
+
+function changedDamagedImage(data) {
+  const results = data.results;
+  results.map(el => {
+    if (el.backdrop_path === null) {
+      return (el.backdrop_path =
+        'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png');
+    }
+    return (el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`);
+  });
+}
+
+export default changedDamagedImage;
