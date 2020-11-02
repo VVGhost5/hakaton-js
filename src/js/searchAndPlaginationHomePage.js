@@ -1,3 +1,4 @@
+import paginationCounrer from './next-prev_btn';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
@@ -14,8 +15,8 @@ const router = createRouter()
   .get('/home', (req, context) => {
     createHomepageMarkup();
     const formRef = document.querySelector('.search-form');
-
     formRef.addEventListener('submit', searchFilms);
+    paginationCounrer();
   })
   .get('/library', (req, context) => {
     createLibraryMarkup();
@@ -43,7 +44,6 @@ function searchFilms(event) {
 
   filmService.fetchFilms().then(data => {
     const results = data.results;
-    console.log(results);
     results.map(el => {
       if (el.backdrop_path === null) {
         return el.backdrop_path = 'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png'
@@ -54,9 +54,10 @@ function searchFilms(event) {
     createHomepageFilmGalleryMarkup(results);
     if (data.total_results === 0) {
       console.log('нет такого фильма');
-
       return;
     }
+    createHomepageFilmGalleryMarkup(data.results);
+    console.log('data from searchFilm', data);
   });
 
   formRef.reset();
