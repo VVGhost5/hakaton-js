@@ -12,7 +12,7 @@ savedFocus();
 createHomepageMarkup();
 
 const router = createRouter()
-  .get('/home', (req, context) => {
+  .get('/', (req, context) => {
     createHomepageMarkup();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilms);
@@ -37,19 +37,26 @@ function searchFilms(event) {
   event.preventDefault();
   const formRef = document.querySelector('.search-form');
   const filmsRef = document.querySelector('.gallery-list');
+  const incrementBtnRef = document.querySelector(
+    "button[data-counter='increment']",
+  );
   const form = event.currentTarget;
   filmService.query = form.elements.query.value;
 
   filmsRef.innerHTML = ' ';
 
-  filmService.fetchFilms().then(data => {
-    if (data.total_results === 0) {
-      console.log('нет такого фильма');
-      return;
-    }
-    createHomepageFilmGalleryMarkup(data.results);
-    console.log('data from searchFilm', data);
-  });
+  filmService
+    .fetchFilms()
+    .then(data => {
+      if (data.total_results === 0) {
+        console.log('нет такого фильма');
+        return;
+      }
+      createHomepageFilmGalleryMarkup(data.results);
+
+      incrementBtnRef.removeAttribute('disabled');
+    })
+    .catch(error => console.log(error));
 
   formRef.reset();
 }

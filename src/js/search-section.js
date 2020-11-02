@@ -9,10 +9,6 @@ export default {
     return fetch(url).then(res => {
       return res.json();
     });
-    // .then(data => {
-    //   console.log('from search-section', data);
-    //   return data;
-    // });
   },
   resetPage() {
     this.page = 1;
@@ -22,6 +18,12 @@ export default {
   },
   decrementPage() {
     this.page -= 1;
+  },
+  get pageStatus() {
+    return this.page;
+  },
+  set pageStatus(value) {
+    this.page = value;
   },
   get query() {
     return this.searchQuery;
