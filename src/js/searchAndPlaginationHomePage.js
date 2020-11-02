@@ -12,7 +12,7 @@ savedFocus();
 createHomepageMarkup();
 
 const router = createRouter()
-  .get('/home', (req, context) => {
+  .get('/', (req, context) => {
     createHomepageMarkup();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilms);
@@ -37,6 +37,9 @@ function searchFilms(event) {
   event.preventDefault();
   const formRef = document.querySelector('.search-form');
   const filmsRef = document.querySelector('.gallery-list');
+  const incrementBtnRef = document.querySelector(
+    "button[data-counter='increment']",
+  );
   const form = event.currentTarget;
   filmService.query = form.elements.query.value;
 
@@ -51,14 +54,15 @@ function searchFilms(event) {
       return el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`;
     });
     
-    createHomepageFilmGalleryMarkup(results);
     if (data.total_results === 0) {
       console.log('нет такого фильма');
       return;
     }
-    createHomepageFilmGalleryMarkup(data.results);
+    createHomepageFilmGalleryMarkup(results);
+    incrementBtnRef.removeAttribute('disabled');
+    
     console.log('data from searchFilm', data);
-  });
+  }).catch(error => console.log(error));
 
   formRef.reset();
 }

@@ -13,34 +13,43 @@ function paginationCounter() {
 
   const valueIncrement = () => {
     filmService.incrementPage();
-    filmService.fetchFilms().then(data => {
-      const filmsRef = document.querySelector('.gallery-list');
-      filmsRef.innerHTML = '';
-      valueRef.textContent = filmService.page;
-      createHomepageFilmGalleryMarkup(data.results);
-      console.log('incr', data);
-    });
+    filmService
+      .fetchFilms()
+      .then(data => {
+        const filmsRef = document.querySelector('.gallery-list');
+        filmsRef.innerHTML = '';
+        valueRef.textContent = filmService.page;
+        createHomepageFilmGalleryMarkup(data.results);
+        if (filmService.pageStatus > 1) {
+          decrementBtnRef.classList.remove('not-visible');
+          decrementBtnRef.classList.add('visible');
+        }
 
-    if (valueRef.textContent > 1) {
-      decrementBtnRef.classList.remove('not-visible');
-    }
+        if (filmService.pageStatus >= data.total_pages) {
+          incrementBtnRef.setAttribute('disabled', true);
+        }
+      })
+      .catch(error => console.log(error));
   };
 
   const valueDecrement = () => {
     filmService.decrementPage();
-    filmService.fetchFilms().then(data => {
-      const filmsRef = document.querySelector('.gallery-list');
-      filmsRef.innerHTML = '';
-      valueRef.textContent = filmService.page;
-      createHomepageFilmGalleryMarkup(data.results);
-      console.log('decr', data);
-    });
+    filmService
+      .fetchFilms()
+      .then(data => {
+        const filmsRef = document.querySelector('.gallery-list');
+        filmsRef.innerHTML = '';
+        valueRef.textContent = filmService.page;
+        createHomepageFilmGalleryMarkup(data.results);
 
-    console.log('PREV CLICKED');
+        if (filmService.pageStatus <= data.total_pages) {
+          incrementBtnRef.removeAttribute('disabled');
+        }
+      })
+      .catch(error => console.log(error));
 
-    valueRef.textContent = filmService.page;
-
-    if (valueRef.textContent < 2) {
+    if (filmService.pageStatus < 2) {
+      decrementBtnRef.classList.remove('visible');
       decrementBtnRef.classList.add('not-visible');
     }
   };
