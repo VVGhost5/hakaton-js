@@ -1,3 +1,20 @@
+body {
+  display: flex;
+  align-items: flex-start;
+}
+
+header {
+  flex-grow: 1;
+}
+
+main {
+  flex-grow: 100;
+}
+
+footer {
+  flex-grow: 1;
+}
+
 .container {
   margin: 0 auto;
   width: 320px;

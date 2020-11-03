@@ -1,27 +1,16 @@
-import paginationCounrer from './next-prev_btn';
+import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
+import filmPagination from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import libraryPageMarkupTpl from '../templates/library-section.hbs';
-import { createRouter } from 'routerjs';
 
 const mainRef = document.querySelector('.main-js');
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
-savedFocus();
 createHomepageMarkup();
-
-const router = createRouter()
-  .get('/', (req, context) => {
-    createHomepageMarkup();
-    const formRef = document.querySelector('.search-form');
-    formRef.addEventListener('submit', searchFilms);
-    paginationCounrer();
-  })
-  .get('/library', (req, context) => {
-    createLibraryMarkup();
-  })
-  .run();
+const formRef = document.querySelector('.search-form');
+savedFocus();
 
 function createHomepageMarkup() {
   const homepageMarkup = homepageMarkupTpl();
@@ -33,44 +22,83 @@ function createLibraryMarkup() {
   mainRef.innerHTML = libraryPageMarkup;
 }
 
-function searchFilms(event) {
+// function searchFilms(event) {
+//   event.preventDefault();
+//   const filmsRef = document.querySelector('.gallery-list');
+//   const counterRef = document.querySelector('#counter');
+//   const form = event.currentTarget;
+//   filmService.query = form.elements.query.value;
+
+//   filmsRef.innerHTML = ' ';
+//   filmService.resetPage();
+//   filmService
+//     .fetchFilms()
+//     .then(data => {
+//       findAndReplaceDamagedImage(data);
+
+//       if (data.total_results === 0) {
+//         console.log('нет такого фильма');
+//         return;
+//       }
+//       createHomepageFilmGalleryMarkup(data.results);
+//       counterRef.classList.remove('display-none');
+//       filmPagination();
+//     })
+//     .catch(error => console.log(error));
+
+//   formRef.reset();
+// }
+
+// formRef.addEventListener('submit', searchFilms);
+
+formRef.addEventListener('submit', event => {
   event.preventDefault();
-  const formRef = document.querySelector('.search-form');
   const filmsRef = document.querySelector('.gallery-list');
-  const incrementBtnRef = document.querySelector(
-    "button[data-counter='increment']",
+  const counterRef = document.querySelector('#counter');
+  const valueRef = document.getElementById('value');
+  const decrementBtnRef = document.querySelector(
+    "button[data-counter='decrement']",
   );
   const form = event.currentTarget;
+
   filmService.query = form.elements.query.value;
 
-  filmsRef.innerHTML = ' ';
+  if (filmService.searchQuery === '') {
+    return;
+  }
 
+  filmService.resetPage();
+
+  if (filmService.resetPage) {
+    valueRef.textContent = filmService.page;
+    decrementBtnRef.classList.remove('visible');
+    decrementBtnRef.classList.add('not-visible');
+
+    console.log('PAGE STATUS AFTER RESET PAGE', filmService.pageStatus);
+  }
+
+  console.log('current page from searchFilm', filmService.pageStatus);
+  filmsRef.innerHTML = ' ';
   filmService
     .fetchFilms()
     .then(data => {
-      changedDamagedImage(data);
-      const results = data.results;
-      // results.map(el => {
-      //   if (el.backdrop_path === null) {
-      //     return (el.backdrop_path =
-      //       'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png');
-      //   }
-      //   return (el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`);
-      // });
+      console.log(data);
+      findAndReplaceDamagedImage(data);
+      createHomepageFilmGalleryMarkup(data.results);
 
       if (data.total_results === 0) {
         console.log('нет такого фильма');
         return;
       }
-      createHomepageFilmGalleryMarkup(data.results);
-      incrementBtnRef.removeAttribute('disabled');
 
-      console.log('data from searchFilm', data);
+      filmPagination();
     })
     .catch(error => console.log(error));
 
   formRef.reset();
-}
+
+  counterRef.classList.remove('display-none');
+});
 
 function focusHomeHandler() {
   homeLinkRef.classList.add('active');
@@ -84,9 +112,6 @@ function focusLibraryHandler() {
   localStorage.setItem('focusedLinkOnHomepage', 'library');
 }
 
-homeLinkRef.addEventListener('click', focusHomeHandler);
-libraryLinkRef.addEventListener('click', focusLibraryHandler);
-
 function savedFocus() {
   const saved = localStorage.getItem('focusedLinkOnHomepage');
 
@@ -96,15 +121,5 @@ function savedFocus() {
   }
 }
 
-function changedDamagedImage(data) {
-  const results = data.results;
-  results.map(el => {
-    if (el.backdrop_path === null) {
-      return (el.backdrop_path =
-        'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png');
-    }
-    return (el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`);
-  });
-}
-
-export default changedDamagedImage;
+homeLinkRef.addEventListener('click', focusHomeHandler);
+libraryLinkRef.addEventListener('click', focusLibraryHandler);

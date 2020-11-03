@@ -22,9 +22,6 @@ export default {
   get pageStatus() {
     return this.page;
   },
-  set pageStatus(value) {
-    this.page = value;
-  },
   get query() {
     return this.searchQuery;
   },
