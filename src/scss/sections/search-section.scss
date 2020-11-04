@@ -43,10 +43,33 @@
   &::placeholder {
     color: black;
   }
-
   @media (min-width: 768px) {
     font-size: 16px;
     width: 284px;
+  }
+}
+
+.form-wrapper {
+  width: 256px;
+  margin: 0 auto;
+  
+  @media (min-width: 768px) {
+    font-size: 16px;
+    width: 284px;
+  }
+}
+.short-list-films{
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  background-color: white;
+  }
+
+.short-list-films__item {
+  padding-left: 24px;
+  font-size: 16px;
+  &:hover {
+    background-color: #f1f0f8;
   }
 }
 
