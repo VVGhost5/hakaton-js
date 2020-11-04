@@ -3,7 +3,9 @@ import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import libraryPageMarkupTpl from '../templates/library-section.hbs';
+import shortFilmsListTmpl from '../templates/input-list.hbs';
 import { createRouter } from 'routerjs';
+
 
 const mainRef = document.querySelector('.main-js');
 const homeLinkRef = document.querySelector('.home-js');
@@ -14,7 +16,7 @@ createHomepageMarkup();
 const router = createRouter()
   .get('/home', (req, context) => {
     createHomepageMarkup();
-    const formRef = document.querySelector('.search-form');
+        const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilms);
     paginationCounrer();
   })
@@ -32,6 +34,46 @@ function createLibraryMarkup() {
   const libraryPageMarkup = libraryPageMarkupTpl();
   mainRef.innerHTML = libraryPageMarkup;
 }
+
+
+
+
+// // Живой инпут...
+// const refs = {
+//   inputFilms: document.querySelector('.input'),
+//   shortFilmsList: document.querySelector('.short-list-films'),
+//   form: document.querySelector('.search-form'),
+//   films: document.querySelector('.gallery-list'),
+// };
+
+// function shortFilmsListMarkup(films) {
+//   refs.shortFilmsList.insertAdjacentHTML(
+//     'beforeend',
+//     shortFilmsListTmpl(films),
+//   );
+// }
+
+// const inputFilmsHeandler = event => {
+//   filmService.query = event.target.value;
+//   console.log(filmService.query);
+//   filmService
+//   .fetchFilms(filmService.query)
+//   .then(data => shortFilmsListMarkup(data.results));
+// };
+
+
+// refs.inputFilms.addEventListener('input', inputFilmsHeandler);
+
+
+// function inputTitleFilms(event) {
+//   refs.shortFilmsList.innerHTML = ' ';
+//   refs.films.innerHTML = ' ';
+//   createHomepageFilmGalleryMarkup(event);
+//   refs.form.reset();
+// }
+
+// refs.shortFilmsList.addEventListener('click', inputTitleFilms);
+// input is end
 
 function searchFilms(event) {
   event.preventDefault();
@@ -77,3 +119,5 @@ function savedFocus() {
     homeLinkRef.classList.remove('active');
   }
 }
+
+

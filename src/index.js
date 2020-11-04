@@ -7,3 +7,4 @@ import './js/searchAndPlaginationHomePage';
 import './js/search-section';
 // import './js/filmDetailPage';
 import './js/renderLibrary';
+import './scss/components/up_btn.scss';
