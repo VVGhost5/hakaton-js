@@ -17,8 +17,10 @@ savedFocus();
 
 const formRef = document.querySelector('.search-form');
 
-formRef.addEventListener('submit', event => {
-  event.preventDefault();
+
+function searchFilm(event) {
+    console.log(event);
+    event.preventDefault();
 
   const filmsRef = document.querySelector('.gallery-list');
   const counterRef = document.querySelector('#counter');
@@ -78,7 +80,7 @@ formRef.addEventListener('submit', event => {
     .catch(error => console.log(error));
 
   formRef.reset();
-});
+  }
 
 function focusHomeHandler() {
   homeLinkRef.classList.add('active');
@@ -103,5 +105,6 @@ function savedFocus() {
 
 homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
+formRef.addEventListener('submit', searchFilm);
 
-export { filmsArray };
+export { filmsArray, searchFilm };
