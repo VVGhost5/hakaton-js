@@ -1,9 +1,8 @@
-import changedDamagedImage from './searchAndPlaginationHomePage';
+import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
 
-function paginationCounter() {
-  const targetBtnRef = document.querySelector('#counter');
+function filmPagination() {
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
   );
@@ -14,21 +13,30 @@ function paginationCounter() {
 
   const valueIncrement = () => {
     filmService.incrementPage();
+    console.log('AFTER - filmService.incrementPage()');
     filmService
       .fetchFilms()
       .then(data => {
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
-        valueRef.textContent = filmService.page;
-        changedDamagedImage(data);
+        findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
+        valueRef.textContent = filmService.page;
+        console.log(
+          'pageStatus after Next Button CLICK',
+          filmService.pageStatus,
+        );
+
+        console.log(data.total_pages);
+
+        if (filmService.pageStatus < data.total_pages) {
+          incrementBtnRef.classList.remove('not-visible');
+        }
+        if (filmService.pageStatus === data.total_pages) {
+          incrementBtnRef.classList.add('not-visible');
+        }
         if (filmService.pageStatus > 1) {
           decrementBtnRef.classList.remove('not-visible');
-          decrementBtnRef.classList.add('visible');
-        }
-
-        if (filmService.pageStatus >= data.total_pages) {
-          incrementBtnRef.setAttribute('disabled', true);
         }
       })
       .catch(error => console.log(error));
@@ -41,20 +49,25 @@ function paginationCounter() {
       .then(data => {
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
-        valueRef.textContent = filmService.page;
-        changedDamagedImage(data);
+        findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
+        valueRef.textContent = filmService.page;
+        console.log('page status after Prev Button CLICK', filmService.page);
+        console.log(data.total_pages);
 
-        if (filmService.pageStatus <= data.total_pages) {
-          incrementBtnRef.removeAttribute('disabled');
+        console.log(data.total_pages);
+
+        if (filmService.pageStatus === 1) {
+          incrementBtnRef.classList.remove('visible');
+          decrementBtnRef.classList.add('not-visible');
+        }
+
+        if (filmService.pageStatus < data.total_pages) {
+          incrementBtnRef.classList.add('visible');
+          incrementBtnRef.classList.remove('not-visible');
         }
       })
       .catch(error => console.log(error));
-
-    if (filmService.pageStatus < 2) {
-      decrementBtnRef.classList.remove('visible');
-      decrementBtnRef.classList.add('not-visible');
-    }
   };
 
   incrementBtnRef.addEventListener('click', valueIncrement);
@@ -62,4 +75,4 @@ function paginationCounter() {
   decrementBtnRef.addEventListener('click', valueDecrement);
 }
 
-export default paginationCounter;
+export default filmPagination;

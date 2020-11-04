@@ -1,4 +1,7 @@
+import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
+import filmPagination from './pagination.js';
 import filmService from './search-section';
+import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
 import showNotFound from './showNotFound';
@@ -7,39 +10,69 @@ let filmsArray = [];
 
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
-savedFocus();
 createHomepageMarkup();
+savedFocus();
 
-function searchFilms(event) {
+formRef.addEventListener('submit', event => {
   event.preventDefault();
-  const formRef = document.querySelector('.search-form');
   const filmsRef = document.querySelector('.gallery-list');
+  const counterRef = document.querySelector('#counter');
+  const wrongInputNotification = document.querySelector(
+    '.wrong-input-notification',
+  );
+
   const form = event.currentTarget;
   filmService.query = form.elements.query.value;
 
-  filmsRef.innerHTML = ' ';
+  if (filmService.searchQuery === '') {
+    wrongInputNotification.textContent =
+      'The field is empty. Please type your query';
+    counterRef.classList.add('display-none');
+    return;
+  }
 
-  filmService.fetchFilms().then(data => {
-    const results = data.results;
-    filmsArray = results;
-    results.map(el => {
-      if (el.backdrop_path === null) {
-        return el.backdrop_path = 'https://miro.medium.com/max/978/1*pUEZd8z__1p-7ICIO1NZFA.png'
+  filmService.resetPage();
+
+  if (filmService.resetPage) {
+    const valueRef = document.getElementById('value');
+    const decrementBtnRef = document.querySelector(
+      "button[data-counter='decrement']",
+    );
+    valueRef.textContent = filmService.page;
+    decrementBtnRef.classList.remove('visible');
+    decrementBtnRef.classList.add('not-visible');
+
+    console.log('PAGE STATUS AFTER RESET PAGE', filmService.pageStatus);
+  }
+
+  console.log('current page from searchFilm', filmService.pageStatus);
+
+  filmsRef.innerHTML = ' ';
+  filmService
+    .fetchFilms()
+    .then(data => {
+      console.log(data);
+      findAndReplaceDamagedImage(data);
+      createHomepageFilmGalleryMarkup(data.results);
+
+      wrongInputNotification.textContent = '';
+
+      if (data.total_results === 0) {
+        wrongInputNotification.textContent =
+          'Please enter a more specific query';
+        return;
       }
-      return el.backdrop_path = `https://image.tmdb.org/t/p/w500${el.backdrop_path}`;
-    });
-    
-    createHomepageFilmGalleryMarkup(results);
-    if (data.total_results === 0) {
-      console.log('нет такого фильма');
-      showNotFound();
-      return;
-    }
-    createHomepageFilmGalleryMarkup(data.results);
-  });
+      if (data.total_pages === 1) {
+        console.log('Знайшло 1 сторінку. Кнопопки не показуємо');
+        return;
+      }
+      filmPagination();
+      counterRef.classList.remove('display-none');
+    })
+    .catch(error => console.log(error));
 
   formRef.reset();
-}
+});
 
 function focusHomeHandler() {
   homeLinkRef.classList.add('active');
@@ -53,9 +86,6 @@ function focusLibraryHandler() {
   localStorage.setItem('focusedLinkOnHomepage', 'library');
 }
 
-homeLinkRef.addEventListener('click', focusHomeHandler);
-libraryLinkRef.addEventListener('click', focusLibraryHandler);
-
 function savedFocus() {
   const saved = localStorage.getItem('focusedLinkOnHomepage');
 
@@ -64,5 +94,8 @@ function savedFocus() {
     homeLinkRef.classList.remove('active');
   }
 }
+
+homeLinkRef.addEventListener('click', focusHomeHandler);
+libraryLinkRef.addEventListener('click', focusLibraryHandler);
 
 export { searchFilms, filmsArray};
