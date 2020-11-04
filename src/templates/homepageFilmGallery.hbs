@@ -1,9 +1,9 @@
 {{#each this}}
 <li class="gallery-item library-gallery__item">
-    <a href="/{{id}}"><img src="{{backdrop_path}}" alt="{{original_title}}"
-            class="gallery-item__image library-gallery__image" width="" height="" /></a>
-    <p class="gallery-item__name library-gallery__name">{{title}}<span
-            class="gallery-item__date">({{release_date}})</span></p>
-    <p class="gallery-item__rating library-gallery__rating">{{vote_average}}</p>
+        <a href="/{{title}}"><img src="{{backdrop_path}}" alt="{{original_title}}"
+                        class="gallery-item__image library-gallery__image" width="" height="" /></a>
+        <p class="gallery-item__name library-gallery__name">{{title}}<span
+                        class="gallery-item__date">({{release_date}})</span></p>
+        <p class="gallery-item__rating library-gallery__rating">{{vote_average}}</p>
 </li>
 {{/each}}

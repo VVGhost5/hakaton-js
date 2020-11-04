@@ -8,13 +8,18 @@ import showNotFound from './showNotFound';
 
 let filmsArray = [];
 
+
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
+
 createHomepageMarkup();
 savedFocus();
 
+const formRef = document.querySelector('.search-form');
+
 formRef.addEventListener('submit', event => {
   event.preventDefault();
+
   const filmsRef = document.querySelector('.gallery-list');
   const counterRef = document.querySelector('#counter');
   const wrongInputNotification = document.querySelector(
@@ -52,6 +57,7 @@ formRef.addEventListener('submit', event => {
     .fetchFilms()
     .then(data => {
       console.log(data);
+      filmsArray = data.results;
       findAndReplaceDamagedImage(data);
       createHomepageFilmGalleryMarkup(data.results);
 
@@ -98,4 +104,4 @@ function savedFocus() {
 homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 
-export { searchFilms, filmsArray};
+export { filmsArray };
