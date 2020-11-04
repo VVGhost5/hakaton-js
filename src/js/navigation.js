@@ -1,7 +1,4 @@
-
-import paginationCounrer from './next-prev_btn';
 import { createRouter } from 'routerjs';
-import { searchFilms } from './searchAndPlaginationHomePage';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
@@ -37,13 +34,16 @@ function createQueueMarkup() {
 }
 
 function getFilmInRequest(title) {
+  console.log(`title ${title}`);
   const filmName = title.replaceAll('%20', ' ');
   if (!filmsArray) {
     return;
   }
+  console.log(`filmName ${filmName}`);
   let filteredFilm = filmsArray.find(el => {
     return el.title === filmName;
   });
+  console.log(`filteredFilm ${filteredFilm}`);
   createFilmDetailPage(filteredFilm);
   handleFilmDetailPage(filteredFilm);
 }
@@ -60,9 +60,6 @@ function createFilmDetailPage(film) {
 const router = createRouter()
   .get('/home', (req, context) => {
     createHomepageMarkup();
-    const formRef = document.querySelector('.search-form');
-    formRef.addEventListener('submit', searchFilms);
-    paginationCounrer();
   })
   .get('/library', (req, context) => {
     createLibraryMarkup();
@@ -78,6 +75,7 @@ const router = createRouter()
     if (title === undefined || title == 'home' || title == 'library' || title == 'queue' || title == 'watch') {
       return;
     }
+
     getFilmInRequest(title);
     
   })
