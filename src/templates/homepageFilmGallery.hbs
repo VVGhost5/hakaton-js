@@ -1,8 +1,9 @@
 {{#each this}}
-<li class="gallery-item">
-    <a href="/{{title}}"><img src="https://image.tmdb.org/t/p/w500{{backdrop_path}}" alt="{{original_title}}"
-            class="gallery-item__image" width="" height="" data-value="{{id}}" /></a>
-    <p class="gallery-item__name">{{title}}({{release_date}})</p>
-    <p class="gallery-item__rating">{{vote_average}}</p>
+<li class="gallery-item library-gallery__item">
+        <a href="/{{title}}"><img src="{{backdrop_path}}" alt="{{original_title}}"
+                        class="gallery-item__image library-gallery__image" width="" height="" /></a>
+        <p class="gallery-item__name library-gallery__name">{{title}}<span
+                        class="gallery-item__date">({{release_date}})</span></p>
+        <p class="gallery-item__rating library-gallery__rating">{{vote_average}}</p>
 </li>
 {{/each}}

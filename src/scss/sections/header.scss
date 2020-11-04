@@ -49,12 +49,13 @@
 .logo {
   margin-left: 20px;
   margin-right: 60px;
-  padding: 24px 0;
+  padding: 24px 0 24px 20px;
   letter-spacing: 1px;
 
   @media (min-width: 768px) {
     display: flex;
     margin-right: 376px;
+    padding: 24px 0 24px 34px;
   }
 
   @media (min-width: 1024px) {

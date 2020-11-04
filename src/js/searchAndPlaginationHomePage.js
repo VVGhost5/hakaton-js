@@ -1,100 +1,86 @@
-import paginationCounrer from './next-prev_btn';
+import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
+import filmPagination from './pagination.js';
 import filmService from './search-section';
-import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
-import libraryPageMarkupTpl from '../templates/library-section.hbs';
-import shortFilmsListTmpl from '../templates/input-list.hbs';
-import { createRouter } from 'routerjs';
+import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
+import { createHomepageMarkup } from './navigation';
+import showNotFound from './showNotFound';
+
+let filmsArray = [];
 
 
-const mainRef = document.querySelector('.main-js');
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
-savedFocus();
+
 createHomepageMarkup();
+savedFocus();
 
-const router = createRouter()
-  .get('/home', (req, context) => {
-    createHomepageMarkup();
-        const formRef = document.querySelector('.search-form');
-    formRef.addEventListener('submit', searchFilms);
-    paginationCounrer();
-  })
-  .get('/library', (req, context) => {
-    createLibraryMarkup();
-  })
-  .run();
-
-function createHomepageMarkup() {
-  const homepageMarkup = homepageMarkupTpl();
-  mainRef.innerHTML = homepageMarkup;
-}
-
-function createLibraryMarkup() {
-  const libraryPageMarkup = libraryPageMarkupTpl();
-  mainRef.innerHTML = libraryPageMarkup;
-}
+const formRef = document.querySelector('.search-form');
 
 
+function searchFilm(event) {
+    console.log(event);
+    event.preventDefault();
 
-
-// // Живой инпут...
-// const refs = {
-//   inputFilms: document.querySelector('.input'),
-//   shortFilmsList: document.querySelector('.short-list-films'),
-//   form: document.querySelector('.search-form'),
-//   films: document.querySelector('.gallery-list'),
-// };
-
-// function shortFilmsListMarkup(films) {
-//   refs.shortFilmsList.insertAdjacentHTML(
-//     'beforeend',
-//     shortFilmsListTmpl(films),
-//   );
-// }
-
-// const inputFilmsHeandler = event => {
-//   filmService.query = event.target.value;
-//   console.log(filmService.query);
-//   filmService
-//   .fetchFilms(filmService.query)
-//   .then(data => shortFilmsListMarkup(data.results));
-// };
-
-
-// refs.inputFilms.addEventListener('input', inputFilmsHeandler);
-
-
-// function inputTitleFilms(event) {
-//   refs.shortFilmsList.innerHTML = ' ';
-//   refs.films.innerHTML = ' ';
-//   createHomepageFilmGalleryMarkup(event);
-//   refs.form.reset();
-// }
-
-// refs.shortFilmsList.addEventListener('click', inputTitleFilms);
-// input is end
-
-function searchFilms(event) {
-  event.preventDefault();
-  const formRef = document.querySelector('.search-form');
   const filmsRef = document.querySelector('.gallery-list');
+  const counterRef = document.querySelector('#counter');
+  const wrongInputNotification = document.querySelector(
+    '.wrong-input-notification',
+  );
+
   const form = event.currentTarget;
   filmService.query = form.elements.query.value;
 
-  filmsRef.innerHTML = ' ';
+  if (filmService.searchQuery === '') {
+    wrongInputNotification.textContent =
+      'The field is empty. Please type your query';
+    counterRef.classList.add('display-none');
+    return;
+  }
 
-  filmService.fetchFilms().then(data => {
-    if (data.total_results === 0) {
-      console.log('нет такого фильма');
-      return;
-    }
-    createHomepageFilmGalleryMarkup(data.results);
-    console.log('data from searchFilm', data);
-  });
+  filmService.resetPage();
+
+  if (filmService.resetPage) {
+    const valueRef = document.getElementById('value');
+    const decrementBtnRef = document.querySelector(
+      "button[data-counter='decrement']",
+    );
+    valueRef.textContent = filmService.page;
+    decrementBtnRef.classList.remove('visible');
+    decrementBtnRef.classList.add('not-visible');
+
+    console.log('PAGE STATUS AFTER RESET PAGE', filmService.pageStatus);
+  }
+
+  console.log('current page from searchFilm', filmService.pageStatus);
+
+  filmsRef.innerHTML = ' ';
+  filmService
+    .fetchFilms()
+    .then(data => {
+      console.log(data);
+      filmsArray = data.results;
+      findAndReplaceDamagedImage(data);
+      createHomepageFilmGalleryMarkup(data.results);
+
+      wrongInputNotification.textContent = '';
+
+      if (data.total_results === 0) {
+        wrongInputNotification.textContent =
+          'Please enter a more specific query';
+        return;
+      }
+      if (data.total_pages === 1) {
+        console.log('Знайшло 1 сторінку. Кнопопки не показуємо');
+        return;
+      }
+      filmPagination();
+      counterRef.classList.remove('display-none');
+    })
+    .catch(error => console.log(error));
 
   formRef.reset();
-}
+  }
 
 function focusHomeHandler() {
   homeLinkRef.classList.add('active');
@@ -108,9 +94,6 @@ function focusLibraryHandler() {
   localStorage.setItem('focusedLinkOnHomepage', 'library');
 }
 
-homeLinkRef.addEventListener('click', focusHomeHandler);
-libraryLinkRef.addEventListener('click', focusLibraryHandler);
-
 function savedFocus() {
   const saved = localStorage.getItem('focusedLinkOnHomepage');
 
@@ -120,4 +103,8 @@ function savedFocus() {
   }
 }
 
+homeLinkRef.addEventListener('click', focusHomeHandler);
+libraryLinkRef.addEventListener('click', focusLibraryHandler);
+formRef.addEventListener('submit', searchFilm);
 
+export { filmsArray, searchFilm };

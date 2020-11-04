@@ -1,0 +1,74 @@
+.btn_wrapper {
+  width: 268px;
+  display: flex;
+  justify-content: space-around;
+  margin: 15px auto;
+
+  @media screen and (min-width: 768px) {
+    width: 212px;
+  }
+}
+
+.prev-next,
+.value {
+  border-color: rgb(221, 221, 221);
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: rgb(240, 240, 240);
+}
+
+.prev-next {
+  width: 94px;
+  line-height: 38px;
+  cursor: pointer;
+  outline: none;
+  font-family: droid-sans, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 22px;
+  color: rgb(85, 98, 112);
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.004);
+  box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004);
+
+  @media screen and (min-width: 768px) {
+    font-size: 17px;
+    width: 74px;
+  }
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  line-height: 38px;
+  margin: auto;
+  font-family: droid-sans, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 22px;
+  color: rgb(85, 98, 112);
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.004);
+  box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 0.004);
+
+  @media screen and (min-width: 768px) {
+    font-size: 17px;
+    width: 38px;
+  }
+}
+
+.visible {
+  visibility: visible;
+}
+
+.not-visible {
+  visibility: hidden;
+}
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
