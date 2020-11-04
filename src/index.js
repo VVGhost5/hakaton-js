@@ -8,3 +8,7 @@ import './js/search-section';
 // import './js/filmDetailPage';
 // import './js/renderLibrary';
 import './js/galleryImageListener';
+import './js/navigation';
+
+
+
