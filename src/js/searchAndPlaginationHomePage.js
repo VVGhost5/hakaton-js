@@ -1,20 +1,17 @@
 import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import filmPagination from './pagination.js';
 import filmService from './search-section';
-import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
+import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
+import { createHomepageMarkup } from './navigation';
+import showNotFound from './showNotFound';
 
-const mainRef = document.querySelector('.main-js');
+let filmsArray = [];
+
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
 createHomepageMarkup();
-const formRef = document.querySelector('.search-form');
 savedFocus();
-
-function createHomepageMarkup() {
-  const homepageMarkup = homepageMarkupTpl();
-  mainRef.innerHTML = homepageMarkup;
-}
 
 formRef.addEventListener('submit', event => {
   event.preventDefault();
@@ -100,3 +97,5 @@ function savedFocus() {
 
 homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
+
+export { searchFilms, filmsArray};

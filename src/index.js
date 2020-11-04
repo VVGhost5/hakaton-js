@@ -6,3 +6,7 @@ import './js/searchAndPlaginationHomePage';
 // import './js/filmDetailPage';
 // import './js/renderLibrary';
 import './js/galleryImageListener';
+import './js/navigation';
+
+
+

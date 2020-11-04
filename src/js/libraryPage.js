@@ -1,34 +1,34 @@
-import watch from '../templates/library-section.hbs';
-import queue from '../templates/library-section.hbs';
+// import watch from '../templates/library-section.hbs';
+// import queue from '../templates/library-section.hbs';
 import { createRouter } from 'routerjs';
 
 const watchLinkRef = document.querySelector('.watch-js');
 const queueLinkRef = document.querySelector('.queue-js');
-const libraryRef = document.querySelector('.library');
+// const libraryRef = document.querySelector('.library');
 
 savedChoice();
 
-const router = createRouter()
-  .get('/watch', (req, context) => {
-    createWatchMarkup();
-  })
-  .get('/queue', (req, context) => {
-    createQueueMarkup();
-  })
-  .run();
+// const router = createRouter()
+//   .get('/watch', (req, context) => {
+//     createWatchMarkup();
+//   })
+//   .get('/queue', (req, context) => {
+//     createQueueMarkup();
+//   })
+//   .run();
 
-watchLinkRef.addEventListener('click', focusWatchHandler);
-queueLinkRef.addEventListener('click', focusQueueHandler);
+// watchLinkRef.addEventListener('click', focusWatchHandler);
+// queueLinkRef.addEventListener('click', focusQueueHandler);
 
-function createWatchMarkup() {
-  const markupWatch = watch();
-  libraryRef.innerHTML = markupWatch;
-}
+// function createWatchMarkup() {
+//   const markupWatch = watch();
+//   libraryRef.innerHTML = markupWatch;
+// }
 
-function createQueueMarkup() {
-  const queueMarkup = queue();
-  libraryRef.innerHTML = queueMarkup;
-}
+// function createQueueMarkup() {
+//   const queueMarkup = queue();
+//   libraryRef.innerHTML = queueMarkup;
+// }
 
 function focusWatchHandler() {
   watchLinkRef.classList.add('is-active');

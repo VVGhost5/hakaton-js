@@ -1,6 +1,4 @@
-import receivedFilm from './test.json';
-import receivedFilm2 from './test2.json';
-import receivedFilm3 from './test3.json';
+
 import createFilmDetailedPage from './createFilmDetailedPage';
 import showNotification from './notification';
 
@@ -18,7 +16,7 @@ const checkPresenceOfArray = (array) => {
 
 checkPresenceOfArray('filmsWatched');
 checkPresenceOfArray('filmsQueue');
-createFilmDetailedPage(receivedFilm);
+// createFilmDetailedPage(receivedFilm);
 
 const refs = {
 ToWatchedButtonRef: document.getElementById('js-button-to-watched'),
@@ -144,4 +142,4 @@ refs.ToWatchedButtonRef.addEventListener('click', (event => handleToWatched(even
 refs.ToQueueButtonRef.addEventListener('click', (event => handleToQueue(event)));
 }
 
-handleFilmDetailPage(receivedFilm);
+export default handleFilmDetailPage;
