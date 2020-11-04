@@ -1,14 +1,16 @@
 .input-wrapper {
   width: 100%;
   height: 67px;
-  padding: 20px 0;
+  padding: 20px 0 10px;
   font-family: 'Roboto', sans-serif;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
   background-color: #f3f6f6;
 }
+
 .search-form {
   width: 256px;
   display: block;
+  margin-bottom: 10px;
 
   &::after {
     content: '';
@@ -18,29 +20,42 @@
     background-color: #818181;
     margin-top: 3px;
   }
+
   @media (min-width: 768px) {
     font-size: 16px;
     width: 284px;
   }
 }
+
 .input {
   display: block;
   margin: auto auto;
   outline: none;
   border: none;
-  width: 220px;
+  width: 252px;
   background-repeat: no-repeat;
   background-size: 17px;
   font-size: 14px;
-  letter-spacing: -0.8px;
+  letter-spacing: 0.6px;
   padding-left: 24px;
   background-color: transparent;
   background-image: url(../images/search-icon.svg);
- &::placeholder {
-   color: black;
- }
+  &::placeholder {
+    color: black;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+    width: 284px;
+  }
 }
 
-
-
-
+.wrong-input-notification {
+  width: 225px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgb(255, 0, 0);
+  text-align: center;
+}

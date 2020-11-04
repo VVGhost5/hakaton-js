@@ -6,9 +6,7 @@ export default {
   fetchFilms() {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${this.searchQuery}&page=${this.page}`;
 
-    return fetch(url).then(res => {
-      return res.json();
-    });
+    return fetch(url).then(res => res.json());
   },
   resetPage() {
     this.page = 1;

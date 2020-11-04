@@ -3,7 +3,6 @@ import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
 
 function filmPagination() {
-  const targetBtnRef = document.querySelector('#counter');
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
   );
@@ -14,6 +13,7 @@ function filmPagination() {
 
   const valueIncrement = () => {
     filmService.incrementPage();
+    console.log('AFTER - filmService.incrementPage()');
     filmService
       .fetchFilms()
       .then(data => {
@@ -22,16 +22,21 @@ function filmPagination() {
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
         valueRef.textContent = filmService.page;
-        console.log('pageStatus after Increment', filmService.pageStatus);
+        console.log(
+          'pageStatus after Next Button CLICK',
+          filmService.pageStatus,
+        );
 
+        console.log(data.total_pages);
+
+        if (filmService.pageStatus < data.total_pages) {
+          incrementBtnRef.classList.remove('not-visible');
+        }
+        if (filmService.pageStatus === data.total_pages) {
+          incrementBtnRef.classList.add('not-visible');
+        }
         if (filmService.pageStatus > 1) {
           decrementBtnRef.classList.remove('not-visible');
-          decrementBtnRef.classList.add('visible');
-        }
-
-        if (filmService.pageStatus >= data.total_pages) {
-          incrementBtnRef.classList.add('not-visible');
-          incrementBtnRef.classList.remove('visible');
         }
       })
       .catch(error => console.log(error));
@@ -47,16 +52,19 @@ function filmPagination() {
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
         valueRef.textContent = filmService.page;
-        console.log('page status after Decrement', filmService.page);
+        console.log('page status after Prev Button CLICK', filmService.page);
+        console.log(data.total_pages);
 
-        if (filmService.pageStatus >= data.total_pages) {
-          incrementBtnRef.classList.remove('not-visible');
-          incrementBtnRef.classList.add('visible');
+        console.log(data.total_pages);
+
+        if (filmService.pageStatus === 1) {
+          incrementBtnRef.classList.remove('visible');
+          decrementBtnRef.classList.add('not-visible');
         }
 
-        if (filmService.pageStatus < 2) {
-          decrementBtnRef.classList.remove('visible');
-          decrementBtnRef.classList.add('not-visible');
+        if (filmService.pageStatus < data.total_pages) {
+          incrementBtnRef.classList.add('visible');
+          incrementBtnRef.classList.remove('not-visible');
         }
       })
       .catch(error => console.log(error));
