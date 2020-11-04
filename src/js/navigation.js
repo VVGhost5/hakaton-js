@@ -7,9 +7,12 @@ import detailsTemplate from '../templates/detailsTemplate.hbs';
 import { filmsArray } from './searchAndPlaginationHomePage';
 import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage } from './renderLibrary';
 import handleFilmDetailPage from './filmDetailPage';
-
+import { searchFilm } from './searchAndPlaginationHomePage';
+import filmPagination from './pagination';
 
 const mainRef = document.querySelector('.main-js');
+
+// searchFilm();
 
 function createHomepageMarkup() {
   const homepageMarkup = homepageMarkupTpl();
@@ -58,26 +61,31 @@ function createFilmDetailPage(film) {
 }   
 
 const router = createRouter()
-  .get('/home', (req, context) => {
+  .get('/', (req, context) => {
     createHomepageMarkup();
+    const formRef = document.querySelector('.search-form');
+    formRef.addEventListener('submit', searchFilm);
+    filmPagination();
+    req.stop();
   })
   .get('/library', (req, context) => {
     createLibraryMarkup();
+    req.stop();
   })
   .get('/library/watch', (req, context) => {
+    console.log('WATCH');
     createWatchMarkup();
+    req.stop();
   })
   .get('/library/queue', (req, context) => {
+    console.log('QUEUE');
     createQueueMarkup();
+    req.stop();
   })
   .get('/:title', (req, context) => {
     const title = req.get('title');
-    if (title === undefined || title == 'home' || title == 'library' || title == 'queue' || title == 'watch') {
-      return;
-    }
-
     getFilmInRequest(title);
-    
+    req.stop();
   })
   .run();
   

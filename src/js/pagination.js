@@ -11,7 +11,8 @@ function filmPagination() {
   );
   const valueRef = document.getElementById('value');
 
-  const valueIncrement = () => {
+  const valueIncrement = (event) => {
+    event.stopPropogation();
     filmService.incrementPage();
     console.log('AFTER - filmService.incrementPage()');
     filmService
