@@ -5,7 +5,7 @@ import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
 import { filmsArray } from './searchAndPlaginationHomePage';
-import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage } from './renderLibrary';
+import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage, toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
@@ -70,15 +70,20 @@ const router = createRouter()
   })
   .get('/library', (req, context) => {
     createLibraryMarkup();
+    savedChoice();
     req.stop();
   })
   .get('/library/watch', (req, context) => {
     console.log('WATCH');
+    localStorage.setItem('focused', 'watch');
+    toggleButtonStyleinLibrary();
     createWatchMarkup();
     req.stop();
   })
   .get('/library/queue', (req, context) => {
     console.log('QUEUE');
+    localStorage.setItem('focused', 'queue');
+    toggleButtonStyleinLibrary();
     createQueueMarkup();
     req.stop();
   })

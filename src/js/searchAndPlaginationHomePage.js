@@ -4,10 +4,8 @@ import filmService from './search-section';
 import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
-import showNotFound from './showNotFound';
 
 let filmsArray = [];
-
 
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
@@ -108,3 +106,4 @@ libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
 export { filmsArray, searchFilm };
+  
