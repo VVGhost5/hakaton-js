@@ -3,15 +3,9 @@ import filmPagination from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
-<<<<<<< HEAD
 
 let filmsArray = [];
 
-=======
-
-export let filmsArray = [];
-
->>>>>>> 1458b12989c21af158b84c726da3f7a81c5173aa
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
 
@@ -133,9 +127,4 @@ homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-<<<<<<< HEAD
-export { filmsArray, searchFilm };
-  
-=======
-export { searchFilm, showPopularFilms };
->>>>>>> 1458b12989c21af158b84c726da3f7a81c5173aa
+export { filmsArray, searchFilm, showPopularFilms };

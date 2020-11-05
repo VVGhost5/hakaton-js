@@ -4,16 +4,8 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-<<<<<<< HEAD
-import { filmsArray } from './searchAndPlaginationHomePage';
 import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage, toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
-=======
 import { filmsArray, showPopularFilms } from './searchAndPlaginationHomePage';
-import {
-  watchedArrayFromLocalStorage,
-  queueArrayFromLocalStorage,
-} from './renderLibrary';
->>>>>>> 1458b12989c21af158b84c726da3f7a81c5173aa
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
