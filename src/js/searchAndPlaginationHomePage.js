@@ -4,7 +4,7 @@ import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
 
-export let filmsArray = [];
+export let filmsArray = 5;
 
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
