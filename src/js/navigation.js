@@ -5,10 +5,14 @@ import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
 import { filmsArray } from './searchAndPlaginationHomePage';
-import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage } from './renderLibrary';
+import {
+  watchedArrayFromLocalStorage,
+  queueArrayFromLocalStorage,
+} from './renderLibrary';
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
+import filmService from './search-section';
 
 const mainRef = document.querySelector('.main-js');
 
@@ -21,7 +25,7 @@ function createHomepageMarkup() {
 
 function createLibraryMarkup() {
   const libraryPageMarkup = libraryPageMarkupTpl();
-    mainRef.innerHTML = libraryPageMarkup;
+  mainRef.innerHTML = libraryPageMarkup;
 }
 
 function createWatchMarkup() {
@@ -52,17 +56,18 @@ function getFilmInRequest(title) {
 }
 
 function createFilmDetailPage(film) {
-     let date = film.release_date.slice(0, 4);
+  let date = film.release_date.slice(0, 4);
   const markup = detailsTemplate(film);
-  mainRef.innerHTML = "";
-    mainRef.insertAdjacentHTML('afterbegin', markup);
-    const titleRef = document.querySelector('.year');
-    titleRef.textContent = date;
-}   
+  mainRef.innerHTML = '';
+  mainRef.insertAdjacentHTML('afterbegin', markup);
+  const titleRef = document.querySelector('.year');
+  titleRef.textContent = date;
+}
 
 const router = createRouter()
   .get('/', (req, context) => {
     createHomepageMarkup();
+    // filmService.fetchFilms();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
     filmPagination();
@@ -88,5 +93,11 @@ const router = createRouter()
     req.stop();
   })
   .run();
-  
-   export { mainRef, createHomepageMarkup, createLibraryMarkup, createWatchMarkup, createQueueMarkup };
+
+export {
+  mainRef,
+  createHomepageMarkup,
+  createLibraryMarkup,
+  createWatchMarkup,
+  createQueueMarkup,
+};
