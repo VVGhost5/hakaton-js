@@ -3,8 +3,12 @@ const key = 'faafef79ea4c171e4623351b880cc7ac';
 export default {
   searchQuery: '',
   page: 1,
-  fetchFilms() {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${this.searchQuery}&page=${this.page}`;
+
+  fetchFilms(film) {
+    film = this.searchQuery;
+    const urlWithQuery = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${this.searchQuery}&page=${this.page}`;
+    const urlWithPopularFilms = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${this.page}`;
+    const url = !film ? urlWithPopularFilms : urlWithQuery;
 
     return fetch(url).then(res => res.json());
   },
