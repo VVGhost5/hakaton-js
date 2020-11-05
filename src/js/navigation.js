@@ -4,15 +4,18 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-import { filmsArray } from './searchAndPlaginationHomePage';
-import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage } from './renderLibrary';
+import { filmsArray, showPopularFilms } from './searchAndPlaginationHomePage';
+import {
+  watchedArrayFromLocalStorage,
+  queueArrayFromLocalStorage,
+} from './renderLibrary';
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
 
 const mainRef = document.querySelector('.main-js');
 
-// searchFilm();
+console.log('navigation');
 
 function createHomepageMarkup() {
   const homepageMarkup = homepageMarkupTpl();
@@ -21,7 +24,7 @@ function createHomepageMarkup() {
 
 function createLibraryMarkup() {
   const libraryPageMarkup = libraryPageMarkupTpl();
-    mainRef.innerHTML = libraryPageMarkup;
+  mainRef.innerHTML = libraryPageMarkup;
 }
 
 function createWatchMarkup() {
@@ -52,19 +55,21 @@ function getFilmInRequest(title) {
 }
 
 function createFilmDetailPage(film) {
-     let date = film.release_date.slice(0, 4);
+  let date = film.release_date.slice(0, 4);
   const markup = detailsTemplate(film);
-  mainRef.innerHTML = "";
-    mainRef.insertAdjacentHTML('afterbegin', markup);
-    const titleRef = document.querySelector('.year');
-    titleRef.textContent = date;
-}   
+  mainRef.innerHTML = '';
+  mainRef.insertAdjacentHTML('afterbegin', markup);
+  const titleRef = document.querySelector('.year');
+  titleRef.textContent = date;
+  console.log('filmDetailpage has been created');
+}
 
 const router = createRouter()
   .get('/', (req, context) => {
     createHomepageMarkup();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
+    showPopularFilms();
     filmPagination();
     req.stop();
   })
@@ -80,6 +85,13 @@ const router = createRouter()
   .get('/library/queue', (req, context) => {
     console.log('QUEUE');
     createQueueMarkup();
+    const watchLinkRef = document.querySelector('.watch-js');
+    const queueLinkRef = document.querySelector('.queue-js');
+    focusWatchHandler();
+    focusQueueHandler();
+    watchLinkRef.addEventListener('click', focusWatchHandler);
+    queueLinkRef.addEventListener('click', focusQueueHandler);
+    savedChoice();
     req.stop();
   })
   .get('/:title', (req, context) => {
@@ -87,6 +99,14 @@ const router = createRouter()
     getFilmInRequest(title);
     req.stop();
   })
+
   .run();
-  
-   export { mainRef, createHomepageMarkup, createLibraryMarkup, createWatchMarkup, createQueueMarkup };
+
+export {
+  mainRef,
+  createHomepageMarkup,
+  createLibraryMarkup,
+  createWatchMarkup,
+  createQueueMarkup,
+  createFilmDetailPage,
+};
