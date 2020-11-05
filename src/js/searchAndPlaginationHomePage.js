@@ -4,7 +4,7 @@ import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
 
-export let filmsArray = 5;
+let filmsArray = [];
 
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
@@ -127,4 +127,4 @@ homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-export { searchFilm, showPopularFilms };
+export { filmsArray, searchFilm, showPopularFilms };
