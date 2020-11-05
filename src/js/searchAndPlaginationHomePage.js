@@ -4,7 +4,7 @@ import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
 
-let filmsArray = [];
+export let filmsArray = [];
 
 const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
@@ -80,6 +80,7 @@ function searchFilm(event) {
       console.log(data);
       console.log('DATA from input form', data);
       filmsArray = data.results;
+      console.log('from input', filmsArray);
       findAndReplaceDamagedImage(data);
       createHomepageFilmGalleryMarkup(data.results);
 
@@ -126,6 +127,4 @@ homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-window.onpopstate;
-
-export { filmsArray, searchFilm, showPopularFilms };
+export { searchFilm, showPopularFilms };

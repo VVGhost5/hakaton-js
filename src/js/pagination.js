@@ -1,7 +1,9 @@
 import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
-import { createFilmDetailPage } from './navigation';
+import { filmsArray } from './searchAndPlaginationHomePage';
+
+console.log(filmsArray);
 
 function filmPagination() {
   const incrementBtnRef = document.querySelector(
@@ -18,6 +20,7 @@ function filmPagination() {
       .fetchFilms()
       .then(data => {
         const filmsRef = document.querySelector('.gallery-list');
+        filmsArray = data.results;
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
@@ -43,6 +46,7 @@ function filmPagination() {
       .fetchFilms()
       .then(data => {
         const filmsRef = document.querySelector('.gallery-list');
+        filmsArray = data.results;
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
