@@ -1,10 +1,8 @@
 import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import filmPagination from './pagination.js';
 import filmService from './search-section';
-import homepageMarkupTpl from '../templates/homepage-section.hbs';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
-import showNotFound from './showNotFound';
 
 let filmsArray = [];
 
@@ -12,21 +10,27 @@ const homeLinkRef = document.querySelector('.home-js');
 const libraryLinkRef = document.querySelector('.library-js');
 
 createHomepageMarkup();
-
 filmPagination();
-filmService
-  .fetchFilms()
-  .then(data => {
-    console.log(data);
-    createHomepageFilmGalleryMarkup(data.results);
-  })
-  .catch(error => console.log(error));
+
+function showPopularFilms() {
+  filmService
+    .fetchFilms()
+    .then(data => {
+      console.log('Data from Popular', data);
+      filmsArray = data.results;
+      findAndReplaceDamagedImage(data);
+      createHomepageFilmGalleryMarkup(data.results);
+      const counterRef = document.querySelector('#counter');
+      counterRef.classList.remove('display-none');
+    })
+    .catch(error => console.log(error));
+}
 
 savedFocus();
 
 const formRef = document.querySelector('.search-form');
 
-function searchFilm(event, film) {
+function searchFilm(event) {
   event.preventDefault();
 
   const filmsRef = document.querySelector('.gallery-list');
@@ -54,7 +58,6 @@ function searchFilm(event, film) {
     (filmService.pageStatus === 1) &
     incrementBtnRef.classList.contains('not-visible')
   ) {
-    console.log('Button NEXT remove not-visible and add visible');
     incrementBtnRef.classList.remove('not-visible');
     incrementBtnRef.classList.add('visible');
   }
@@ -68,17 +71,14 @@ function searchFilm(event, film) {
     valueRef.textContent = filmService.page;
     decrementBtnRef.classList.remove('visible');
     decrementBtnRef.classList.add('not-visible');
-
-    console.log('PAGE STATUS AFTER RESET PAGE', filmService.pageStatus);
   }
-
-  console.log('current page from searchFilm', filmService.pageStatus);
 
   filmsRef.innerHTML = ' ';
   filmService
     .fetchFilms()
     .then(data => {
       console.log(data);
+      console.log('DATA from input form', data);
       filmsArray = data.results;
       findAndReplaceDamagedImage(data);
       createHomepageFilmGalleryMarkup(data.results);
@@ -91,7 +91,7 @@ function searchFilm(event, film) {
         return;
       }
       if (data.total_pages === 1) {
-        console.log('Знайшло 1 сторінку. Кнопопки не показуємо');
+        incrementBtnRef.classList.add('not-visible');
         return;
       }
       counterRef.classList.remove('display-none');
@@ -126,4 +126,6 @@ homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-export { filmsArray, searchFilm };
+window.onpopstate;
+
+export { filmsArray, searchFilm, showPopularFilms };

@@ -4,7 +4,7 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-import { filmsArray } from './searchAndPlaginationHomePage';
+import { filmsArray, showPopularFilms } from './searchAndPlaginationHomePage';
 import {
   watchedArrayFromLocalStorage,
   queueArrayFromLocalStorage,
@@ -12,11 +12,10 @@ import {
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
-import filmService from './search-section';
 
 const mainRef = document.querySelector('.main-js');
 
-// searchFilm();
+console.log('navigation');
 
 function createHomepageMarkup() {
   const homepageMarkup = homepageMarkupTpl();
@@ -62,14 +61,15 @@ function createFilmDetailPage(film) {
   mainRef.insertAdjacentHTML('afterbegin', markup);
   const titleRef = document.querySelector('.year');
   titleRef.textContent = date;
+  console.log('filmDetailpage has been created');
 }
 
 const router = createRouter()
   .get('/', (req, context) => {
     createHomepageMarkup();
-    // filmService.fetchFilms();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
+    showPopularFilms();
     filmPagination();
     req.stop();
   })
@@ -85,6 +85,13 @@ const router = createRouter()
   .get('/library/queue', (req, context) => {
     console.log('QUEUE');
     createQueueMarkup();
+    const watchLinkRef = document.querySelector('.watch-js');
+    const queueLinkRef = document.querySelector('.queue-js');
+    focusWatchHandler();
+    focusQueueHandler();
+    watchLinkRef.addEventListener('click', focusWatchHandler);
+    queueLinkRef.addEventListener('click', focusQueueHandler);
+    savedChoice();
     req.stop();
   })
   .get('/:title', (req, context) => {
@@ -92,6 +99,7 @@ const router = createRouter()
     getFilmInRequest(title);
     req.stop();
   })
+
   .run();
 
 export {
@@ -100,4 +108,5 @@ export {
   createLibraryMarkup,
   createWatchMarkup,
   createQueueMarkup,
+  createFilmDetailPage,
 };

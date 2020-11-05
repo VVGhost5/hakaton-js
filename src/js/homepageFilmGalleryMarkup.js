@@ -5,8 +5,7 @@ function createHomepageFilmGalleryMarkup(film) {
   const markup = homepageGalleryTpl(film);
   const galleryRef = document.querySelector('.gallery-list');
   galleryRef.insertAdjacentHTML('beforeend', markup);
-  upBtnCreate ()
+  upBtnCreate();
 }
 
 export default createHomepageFilmGalleryMarkup;
-
