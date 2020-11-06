@@ -2,7 +2,10 @@ import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import { filmPagination } from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
-import savedFocusHomeLibrary from './home-library-btns-service';
+import {
+  savedFocusHomeLibrary,
+  focusHomeHandlerfrom,
+} from './home-library-btns-service';
 import { createHomepageMarkup } from './navigation';
 
 let filmsArray = [];
@@ -59,8 +62,12 @@ function searchFilm(event) {
   event.preventDefault();
 
   const filmsRef = document.querySelector('.gallery-list');
+  const counterRef = document.querySelector('#counter');
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
+  );
+  const wrongInputNotification = document.querySelector(
+    '.wrong-input-notification',
   );
 
   const form = event.currentTarget;
@@ -103,7 +110,7 @@ function searchFilm(event) {
   filmsRef.innerHTML = ' ';
 
   showFilms();
-  formRef.reset();
+  form.reset();
 }
 
 function sliceDate(films) {
@@ -112,30 +119,6 @@ function sliceDate(films) {
   });
 }
 
-function focusHomeHandler() {
-  homeLinkRef.classList.add('active');
-  libraryLinkRef.classList.remove('active');
-  localStorage.setItem('focusedLinkOnHomepage', 'home');
-}
-
-function focusLibraryHandler() {
-  homeLinkRef.classList.remove('active');
-  libraryLinkRef.classList.add('active');
-  localStorage.setItem('focusedLinkOnHomepage', 'library');
-}
-
-function savedFocus() {
-  const saved = localStorage.getItem('focusedLinkOnHomepage');
-
-  if (saved === 'library') {
-    libraryLinkRef.classList.add('active');
-    homeLinkRef.classList.remove('active');
-  }
-}
-
-// homeLinkRef.addEventListener('click', focusHomeHandler);
-// libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
 export { filmsArray, searchFilm, sliceDate, showFilms };
- 

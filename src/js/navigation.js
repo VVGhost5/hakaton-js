@@ -4,15 +4,26 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-import { toggleButtonStyleinLibrary, savedChoice} from './renderLibrary';
-import { filmsArray, showFilms, savedFocusHomeLibrary, searchFilm } from './searchAndPlaginationHomePage';
+import { toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
+import {
+  filmsArray,
+  showFilms,
+  searchFilm,
+} from './searchAndPaginationHomePage';
 import handleFilmDetailPage from './filmDetailPage';
 import { filmPagination, filmsArrayFromPagination } from './pagination';
 import { showLoader } from './errorLoader';
 import filmService from './search-section';
+import {
+  savedFocusHomeLibrary,
+  focusHomeHandler,
+  focusLibraryHandler,
+} from './home-library-btns-service';
 
 const mainRef = document.querySelector('.main-js');
-let watchedArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
+let watchedArrayFromLocalStorage = JSON.parse(
+  localStorage.getItem('filmsWatched'),
+);
 let queueArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsQueue'));
 
 function createHomepageMarkup() {
@@ -26,7 +37,9 @@ function createLibraryMarkup() {
 }
 
 function createWatchMarkup() {
-    watchedArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
+  watchedArrayFromLocalStorage = JSON.parse(
+    localStorage.getItem('filmsWatched'),
+  );
   const libraryRef = document.querySelector('.library');
   const markupWatch = watch(watchedArrayFromLocalStorage);
   libraryRef.innerHTML = markupWatch;
@@ -46,18 +59,18 @@ function getFilmInRequest(title) {
   }
   if (filmService.pageStatus === 1) {
     let filteredFilm = filmsArray.find(el => {
-    return el.title === filmName;
-  });
-createFilmDetailPage(filteredFilm);
+      return el.title === filmName;
+    });
+    createFilmDetailPage(filteredFilm);
     handleFilmDetailPage(filteredFilm);
     return;
   }
   if (filmService.pageStatus > 1) {
-let filmFromPagination = filmsArrayFromPagination.find(el => {
-    return el.title === filmName;
-  });
-  createFilmDetailPage(filmFromPagination);
-  handleFilmDetailPage(filmFromPagination);
+    let filmFromPagination = filmsArrayFromPagination.find(el => {
+      return el.title === filmName;
+    });
+    createFilmDetailPage(filmFromPagination);
+    handleFilmDetailPage(filmFromPagination);
   }
 }
 
@@ -73,6 +86,15 @@ function createFilmDetailPage(film) {
 const router = createRouter()
   .get('/', (req, context) => {
     createHomepageMarkup();
+
+    const homeWrapper = document.querySelector('.home-wrapper-js');
+    const libraryWrapper = document.querySelector('.library-wrapper-js');
+    if (!homeWrapper.classList.contains('active')) {
+      homeWrapper.classList.add('active');
+      libraryWrapper.classList.remove('active');
+      localStorage.setItem('focusedLinkOnHomepage', 'home');
+    }
+
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
 

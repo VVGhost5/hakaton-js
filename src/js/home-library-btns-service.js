@@ -25,4 +25,4 @@ function savedFocusHomeLibrary() {
 homeWrapper.addEventListener('click', focusHomeHandler);
 libraryWrapper.addEventListener('click', focusLibraryHandler);
 
-export default savedFocusHomeLibrary;
+export { savedFocusHomeLibrary, focusHomeHandler, focusLibraryHandler };
