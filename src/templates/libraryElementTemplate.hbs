@@ -1,9 +1,11 @@
 <ul class="library-gallery">
     {{#each this}}
     <li class="library-gallery__item">
-        <img class="library-gallery__image" src="{{backdrop_path}}" alt="{{title}} poster">
-        <p class="library-gallery__rating">{{vote_average}}</p>
-        <p class="library-gallery__name">{{title}}<span class="gallery-item__date">({{release_date}})</span></p>
+        <a href="/{{title}}">
+            <img class="library-gallery__image" src="{{backdrop_path}}" alt="{{title}} poster">
+            <p class="library-gallery__rating">{{vote_average}}</p>
+            <p class="library-gallery__name">{{title}}<span class="gallery-item__date">({{release_date}})</span></p>
+        </a>
     </li>
     {{/each}}
 </ul>

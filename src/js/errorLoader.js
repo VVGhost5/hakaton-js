@@ -7,4 +7,4 @@ function showLoader() {
     
 }
 
-export default showLoader;
+export { showLoader };

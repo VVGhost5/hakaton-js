@@ -85,6 +85,7 @@
   .details {
     flex-wrap: nowrap;
     justify-content: space-between;
+    width: 100%;
   
     &__image-block {
       width: 50%;
@@ -96,14 +97,16 @@
 
     &__info-block-button-block {
         display: flex;
+        justify-content: space-between;
     }
 
     &__info-block-button-block-button {
     display: block;
       cursor: pointer;
+      padding-left: 10px;
       padding-bottom: 0;
       padding-top: 0;
-      width: 50%;
+      width: 48%;
       background-color: transparent;
       background-size: 5%;
       border: 1px solid transparent;
@@ -120,6 +123,7 @@
     }
 
     &__info-block-button-block-button-to-watched {
+        padding-left: 24px;
         background-image: url('../images/add-to-watched-button.png');
     }
 
@@ -131,5 +135,6 @@
     
 
 }
+
 
 

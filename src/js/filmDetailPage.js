@@ -1,5 +1,4 @@
 
-import createFilmDetailedPage from './createFilmDetailedPage';
 import showNotification from './notification';
 
 const handleFilmDetailPage = (receivedFilm) => {
@@ -16,7 +15,6 @@ const checkPresenceOfArray = (array) => {
 
 checkPresenceOfArray('filmsWatched');
 checkPresenceOfArray('filmsQueue');
-// createFilmDetailedPage(receivedFilm);
 
 const refs = {
 ToWatchedButtonRef: document.getElementById('js-button-to-watched'),

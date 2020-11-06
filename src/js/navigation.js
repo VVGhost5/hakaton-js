@@ -4,13 +4,17 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage, toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
+import { toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
 import { filmsArray, showPopularFilms } from './searchAndPlaginationHomePage';
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
-import filmPagination from './pagination';
+import { filmPagination, filmsArrayFromPagination } from './pagination';
+import { showLoader } from './errorLoader';
+import filmService from './search-section';
 
 const mainRef = document.querySelector('.main-js');
+let watchedArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
+let queueArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsQueue'));
 
 console.log('navigation');
 
@@ -25,12 +29,14 @@ function createLibraryMarkup() {
 }
 
 function createWatchMarkup() {
+    watchedArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
   const libraryRef = document.querySelector('.library');
   const markupWatch = watch(watchedArrayFromLocalStorage);
   libraryRef.innerHTML = markupWatch;
 }
 
 function createQueueMarkup() {
+  queueArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsQueue'));
   const libraryRef = document.querySelector('.library');
   const queueMarkup = queue(queueArrayFromLocalStorage);
   libraryRef.innerHTML = queueMarkup;
@@ -42,16 +48,27 @@ function getFilmInRequest(title) {
   if (!filmsArray) {
     return;
   }
-  console.log(`filmName ${filmName}`);
-  let filteredFilm = filmsArray.find(el => {
+  if (filmService.pageStatus === 1) {
+    let filteredFilm = filmsArray.find(el => {
     return el.title === filmName;
   });
-  console.log(`filteredFilm ${filteredFilm}`);
-  createFilmDetailPage(filteredFilm);
-  handleFilmDetailPage(filteredFilm);
+    console.log(`ПЕРВАЯ СТРАНИЦА ${filteredFilm}` );
+createFilmDetailPage(filteredFilm);
+    handleFilmDetailPage(filteredFilm);
+    return;
+  }
+  if (filmService.pageStatus > 1) {
+let filmFromPagination = filmsArrayFromPagination.find(el => {
+    return el.title === filmName;
+  });
+      console.log(`ОСТАЛЬНЫЕ СТРАНИЦЫ ${filmFromPagination}` );
+  createFilmDetailPage(filmFromPagination);
+  handleFilmDetailPage(filmFromPagination);
+  }
 }
 
 function createFilmDetailPage(film) {
+  console.log(`Показать фильм ${film}`);
   let date = film.release_date.slice(0, 4);
   const markup = detailsTemplate(film);
   mainRef.innerHTML = '';
@@ -87,18 +104,15 @@ const router = createRouter()
     localStorage.setItem('focused', 'queue');
     toggleButtonStyleinLibrary();
     createQueueMarkup();
-    const watchLinkRef = document.querySelector('.watch-js');
-    const queueLinkRef = document.querySelector('.queue-js');
-    focusWatchHandler();
-    focusQueueHandler();
-    watchLinkRef.addEventListener('click', focusWatchHandler);
-    queueLinkRef.addEventListener('click', focusQueueHandler);
-    savedChoice();
     req.stop();
   })
   .get('/:title', (req, context) => {
     const title = req.get('title');
     getFilmInRequest(title);
+    req.stop();
+  })
+  .get('/404', (req, context) => {
+    showLoader();
     req.stop();
   })
 
