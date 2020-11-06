@@ -7,7 +7,7 @@
   &__nav {
     width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     align-items: center;
   }
 }
@@ -15,14 +15,13 @@
 .site-navigation {
   display: flex;
 
-  &__item:not(:last-child) {
-    margin-right: 60px;
+  &__item {
+    margin-right: 25px;
   }
 
   &__link {
+    display: block;
     color: #372c48;
-    width: 122px;
-    color: #4c6973;
     font-size: 16px;
     font-weight: 600;
     text-align: center;
@@ -30,19 +29,7 @@
     text-decoration: none;
     position: relative;
     transition: all 0.2s linear;
-  }
-
-  &__link::after {
-    position: absolute;
-    display: block;
-    content: '';
-    width: 0;
-    height: 3px;
-    border-bottom: 2px solid #372c48;
-    left: 50%;
-    bottom: -16px;
-    transform: translateX(-50%);
-    transition: all 0.2s linear;
+    margin: 0 auto;
   }
 }
 
@@ -78,4 +65,8 @@
   .span {
     display: none;
   }
+}
+
+.active {
+  border-bottom: 2px solid #372c48;
 }

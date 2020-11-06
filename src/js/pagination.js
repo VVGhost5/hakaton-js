@@ -11,7 +11,7 @@ function filmPagination() {
   );
   const valueRef = document.getElementById('value');
 
-  const valueIncrement = event => {
+  const valueIncrement = () => {
     filmService.incrementPage();
     filmService
       .fetchFilms()
@@ -20,8 +20,13 @@ function filmPagination() {
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
-        valueRef.textContent = filmService.page;
-        console.log('data after NEXT', data);
+        valueRef.textContent = filmService.pageStatus;
+
+        window.history.pushState(
+          '',
+          '',
+          `?query=${filmService.query}&page=${filmService.pageStatus}`,
+        );
 
         if (filmService.pageStatus < data.total_pages) {
           incrementBtnRef.classList.remove('not-visible');
@@ -45,8 +50,14 @@ function filmPagination() {
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
         createHomepageFilmGalleryMarkup(data.results);
-        valueRef.textContent = filmService.page;
-        console.log('data after PREV', data);
+        valueRef.textContent = filmService.pageStatus;
+
+        window.history.pushState(
+          '',
+          '',
+          `?query=${filmService.query}&page=${filmService.pageStatus}`,
+        );
+
         if (filmService.pageStatus === 1) {
           incrementBtnRef.classList.remove('visible');
           decrementBtnRef.classList.add('not-visible');

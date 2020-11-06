@@ -4,15 +4,19 @@ import libraryPageMarkupTpl from '../templates/library-section.hbs';
 import watch from '../templates/libraryElementTemplate.hbs';
 import queue from '../templates/libraryElementTemplate.hbs';
 import detailsTemplate from '../templates/detailsTemplate.hbs';
-import { watchedArrayFromLocalStorage, queueArrayFromLocalStorage, toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
-import { filmsArray, showPopularFilms } from './searchAndPlaginationHomePage';
+import {
+  watchedArrayFromLocalStorage,
+  queueArrayFromLocalStorage,
+  toggleButtonStyleinLibrary,
+  savedChoice,
+} from './renderLibrary';
+import { filmsArray, showFilms } from './searchAndPlaginationHomePage';
 import handleFilmDetailPage from './filmDetailPage';
 import { searchFilm } from './searchAndPlaginationHomePage';
 import filmPagination from './pagination';
+import filmService from './search-section';
 
 const mainRef = document.querySelector('.main-js');
-
-console.log('navigation');
 
 function createHomepageMarkup() {
   const homepageMarkup = homepageMarkupTpl();
@@ -66,8 +70,20 @@ const router = createRouter()
     createHomepageMarkup();
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
-    showPopularFilms();
+
+    if (filmService.query) {
+      filmService.query = req.query.query;
+      filmService.pageStatus = req.query.page;
+      console.log(filmService.query);
+    }
+
+    filmService.query = '';
+    filmService.pageStatus = 1;
+
+    showFilms();
     filmPagination();
+    console.log(req);
+    console.log('c', context);
     req.stop();
   })
   .get('/library', (req, context) => {
