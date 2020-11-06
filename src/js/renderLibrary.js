@@ -1,24 +1,20 @@
-import makeRenderFilmInLibrary from './renderFilm'
-
-let watchedArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsWatched'));
-let queueArrayFromLocalStorage = JSON.parse(localStorage.getItem('filmsQueue'));
-
-const sliceDate = (films) => {
-
-}
+import { createQueueMarkup, createWatchMarkup } from './navigation';
 
 function savedChoice() {
+  console.log('savedChoice');
     const buttonLinkWatchedRef = document.querySelector('.watch-js');
 const buttonLinkQueueRef = document.querySelector('.queue-js');
   const saved = localStorage.getItem('focused');
 
-    if (saved === 'watched') {
+    if (saved === 'watch') {
       buttonLinkWatchedRef.classList.add('is-active');
-        buttonLinkQueueRef.classList.remove('is-active');
+      buttonLinkQueueRef.classList.remove('is-active');
+      createWatchMarkup();
         return;
   } 
     buttonLinkWatchedRef.classList.remove('is-active');
-        buttonLinkQueueRef.classList.add('is-active');
+  buttonLinkQueueRef.classList.add('is-active');
+  createQueueMarkup();
 }
 
 const toggleButtonStyleinLibrary = () => {
@@ -32,4 +28,4 @@ const buttonLinkQueueRef = document.querySelector('.queue-js');
 // makeRenderFilmInLibrary(watchedArrayFromLocalStorage);
 
 
-export { watchedArrayFromLocalStorage, queueArrayFromLocalStorage, toggleButtonStyleinLibrary, savedChoice };
+export { toggleButtonStyleinLibrary, savedChoice };

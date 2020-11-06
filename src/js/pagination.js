@@ -2,6 +2,8 @@ import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import filmService from './search-section';
 
+let filmsArrayFromPagination = [];
+
 function filmPagination() {
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
@@ -16,6 +18,7 @@ function filmPagination() {
     filmService
       .fetchFilms()
       .then(data => {
+        filmsArrayFromPagination = data.results;
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
@@ -41,6 +44,7 @@ function filmPagination() {
     filmService
       .fetchFilms()
       .then(data => {
+        filmsArrayFromPagination = data.results;
         const filmsRef = document.querySelector('.gallery-list');
         filmsRef.innerHTML = '';
         findAndReplaceDamagedImage(data);
@@ -64,4 +68,4 @@ function filmPagination() {
   decrementBtnRef.addEventListener('click', valueDecrement);
 }
 
-export default filmPagination;
+export { filmsArrayFromPagination, filmPagination };

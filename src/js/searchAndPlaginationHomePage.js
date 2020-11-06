@@ -1,5 +1,5 @@
 import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
-import filmPagination from './pagination.js';
+import { filmPagination } from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
 import { createHomepageMarkup } from './navigation';
@@ -19,6 +19,7 @@ function showPopularFilms() {
       console.log('Data from Popular', data);
       filmsArray = data.results;
       findAndReplaceDamagedImage(data);
+      sliceDate(data.results);
       createHomepageFilmGalleryMarkup(data.results);
       const counterRef = document.querySelector('#counter');
       counterRef.classList.remove('display-none');
@@ -79,9 +80,11 @@ function searchFilm(event) {
     .then(data => {
       console.log(data);
       console.log('DATA from input form', data);
+      console.log(data.results);
       filmsArray = data.results;
       console.log('from input', filmsArray);
       findAndReplaceDamagedImage(data);
+      sliceDate(data.results);
       createHomepageFilmGalleryMarkup(data.results);
 
       wrongInputNotification.textContent = '';
@@ -100,6 +103,12 @@ function searchFilm(event) {
     .catch(error => console.log(error));
 
   formRef.reset();
+}
+
+function sliceDate(films) {
+  films.map(el => {
+    el.release_date = el.release_date.slice(0, 4);
+  });
 }
 
 function focusHomeHandler() {
@@ -127,4 +136,4 @@ homeLinkRef.addEventListener('click', focusHomeHandler);
 libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-export { filmsArray, searchFilm, showPopularFilms };
+export { filmsArray, searchFilm, showPopularFilms, sliceDate };
