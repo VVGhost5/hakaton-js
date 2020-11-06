@@ -2,14 +2,14 @@ import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import { filmPagination } from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
-import savedFocus from './home-library-btns-service';
+import savedFocusHomeLibrary from './home-library-btns-service';
 import { createHomepageMarkup } from './navigation';
 
 let filmsArray = [];
 
 createHomepageMarkup();
 filmPagination();
-savedFocus();
+savedFocusHomeLibrary();
 const formRef = document.querySelector('.search-form');
 
 function showFilms() {
@@ -133,11 +133,9 @@ function savedFocus() {
   }
 }
 
-homeLinkRef.addEventListener('click', focusHomeHandler);
-libraryLinkRef.addEventListener('click', focusLibraryHandler);
+// homeLinkRef.addEventListener('click', focusHomeHandler);
+// libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
-formRef.addEventListener('submit', searchFilm);
-
-export { filmsArray, searchFilm, showPopularFilms, sliceDate };
+export { filmsArray, searchFilm, sliceDate, showFilms };
  

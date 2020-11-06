@@ -13,7 +13,7 @@ function focusLibraryHandler() {
   localStorage.setItem('focusedLinkOnHomepage', 'library');
 }
 
-function savedFocus() {
+function savedFocusHomeLibrary() {
   const saved = localStorage.getItem('focusedLinkOnHomepage');
 
   if (saved === 'library') {
@@ -25,4 +25,4 @@ function savedFocus() {
 homeWrapper.addEventListener('click', focusHomeHandler);
 libraryWrapper.addEventListener('click', focusLibraryHandler);
 
-export default savedFocus;
+export default savedFocusHomeLibrary;
