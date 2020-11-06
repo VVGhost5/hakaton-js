@@ -1,1 +1,0 @@
-# hakaton-js-ad-astra
