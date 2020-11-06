@@ -1,7 +1,6 @@
 import { createQueueMarkup, createWatchMarkup } from './navigation';
 
 function savedChoice() {
-  console.log('savedChoice');
     const buttonLinkWatchedRef = document.querySelector('.watch-js');
 const buttonLinkQueueRef = document.querySelector('.queue-js');
   const saved = localStorage.getItem('focused');
@@ -23,9 +22,5 @@ const buttonLinkQueueRef = document.querySelector('.queue-js');
         buttonLinkWatchedRef.classList.toggle('is-active');
         buttonLinkQueueRef.classList.toggle('is-active');
 }
-
-// makeRenderFilmInLibrary(queueArrayFromLocalStorage);
-// makeRenderFilmInLibrary(watchedArrayFromLocalStorage);
-
 
 export { toggleButtonStyleinLibrary, savedChoice };

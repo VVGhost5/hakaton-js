@@ -8,7 +8,7 @@ export default {
     film = this.searchQuery;
     const urlWithQuery = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${this.searchQuery}&page=${this.page}`;
     const urlWithPopularFilms = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&language=en-US&page=${this.page}`;
-    const url = !film ? urlWithPopularFilms : urlWithQuery;
+    const url = film ? urlWithQuery : urlWithPopularFilms;
 
     return fetch(url).then(res => res.json());
   },
@@ -23,6 +23,9 @@ export default {
   },
   get pageStatus() {
     return this.page;
+  },
+  set pageStatus(value) {
+    this.page = value;
   },
   get query() {
     return this.searchQuery;

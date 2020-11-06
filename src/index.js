@@ -4,4 +4,3 @@ import './js/searchAndPlaginationHomePage';
 import './js/renderLibrary';
 import './scss/components/up_btn.scss';
 import './js/navigation';
-
