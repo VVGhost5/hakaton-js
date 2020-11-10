@@ -29,10 +29,12 @@ function showFilms() {
       const counterRef = document.querySelector('#counter');
       counterRef.classList.remove('display-none');
 
+      const state = { page: filmService.pageStatus };
+
       window.history.pushState(
+        state,
         '',
-        '',
-        `?query=${filmService.query}&page=${filmService.pageStatus}`,
+        `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
       );
 
       wrongInputNotification.textContent = '';
@@ -66,11 +68,17 @@ function searchFilm(event) {
   const form = event.currentTarget;
   filmService.query = form.elements.query.value.trim();
 
+  const state = { page: filmService.pageStatus };
+
   window.history.pushState(
+    state,
     '',
-    '',
-    `?query=${filmService.query}&page=${filmService.pageStatus}`,
+    `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
   );
+
+  window.onpopstate = event => {
+    console.log('onpopstate', filmService.pageStatus);
+  };
 
   if (filmService.searchQuery === '') {
     wrongInputNotification.textContent =
@@ -112,30 +120,6 @@ function sliceDate(films) {
   });
 }
 
-function focusHomeHandler() {
-  homeLinkRef.classList.add('active');
-  libraryLinkRef.classList.remove('active');
-  localStorage.setItem('focusedLinkOnHomepage', 'home');
-}
-
-function focusLibraryHandler() {
-  homeLinkRef.classList.remove('active');
-  libraryLinkRef.classList.add('active');
-  localStorage.setItem('focusedLinkOnHomepage', 'library');
-}
-
-function savedFocus() {
-  const saved = localStorage.getItem('focusedLinkOnHomepage');
-
-  if (saved === 'library') {
-    libraryLinkRef.classList.add('active');
-    homeLinkRef.classList.remove('active');
-  }
-}
-
-// homeLinkRef.addEventListener('click', focusHomeHandler);
-// libraryLinkRef.addEventListener('click', focusLibraryHandler);
 formRef.addEventListener('submit', searchFilm);
 
 export { filmsArray, searchFilm, sliceDate, showFilms };
- 
