@@ -37,10 +37,11 @@ function showFilms() {
       window.history.pushState(
         state,
         '',
-        `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
+        `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`);
      
       wrongInputNotification.textContent = '';
-
+      
+  
       if (
         (data.total_results === 0) &
         !counterRef.classList.contains('display-none')
@@ -68,9 +69,7 @@ function searchFilm(event) {
     "button[data-counter='increment']",
   );
   const counterRef = document.querySelector('#counter');
-  const incrementBtnRef = document.querySelector(
-    "button[data-counter='increment']",
-  );
+ 
   const wrongInputNotification = document.querySelector(
     '.wrong-input-notification',
   );

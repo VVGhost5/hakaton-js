@@ -8,7 +8,6 @@ import { toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
 import {
   filmsArray,
   showFilms,
-  savedFocusHomeLibrary,
   searchFilm,
 } from './searchAndPaginationHomePage';
 import handleFilmDetailPage from './filmDetailPage';
