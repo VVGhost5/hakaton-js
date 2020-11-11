@@ -84,7 +84,7 @@ function createFilmDetailPage(film) {
 }
 
 const router = createRouter()
-  .get('/', (req, context) => {
+  .get('/', (req) => {
     createHomepageMarkup();
 
     const homeWrapper = document.querySelector('.home-wrapper-js');
