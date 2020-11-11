@@ -15,7 +15,7 @@
 .site-navigation {
   display: flex;
 
-  &__item {
+  &__item:not(:last-of-type) {
     margin-right: 25px;
   }
 

@@ -2,7 +2,10 @@ import findAndReplaceDamagedImage from './findAndReplaceDamagedImage';
 import { filmPagination } from './pagination.js';
 import filmService from './search-section';
 import createHomepageFilmGalleryMarkup from './homepageFilmGalleryMarkup';
-import savedFocusHomeLibrary from './home-library-btns-service';
+import {
+  savedFocusHomeLibrary,
+  focusHomeHandlerfrom,
+} from './home-library-btns-service';
 import { createHomepageMarkup } from './navigation';
 
 let filmsArray = [];
@@ -35,8 +38,7 @@ function showFilms() {
         state,
         '',
         `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
-      );
-
+     
       wrongInputNotification.textContent = '';
 
       if (
@@ -61,8 +63,16 @@ function searchFilm(event) {
   event.preventDefault();
 
   const filmsRef = document.querySelector('.gallery-list');
+  
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
+  );
+  const counterRef = document.querySelector('#counter');
+  const incrementBtnRef = document.querySelector(
+    "button[data-counter='increment']",
+  );
+  const wrongInputNotification = document.querySelector(
+    '.wrong-input-notification',
   );
 
   const form = event.currentTarget;
@@ -75,10 +85,6 @@ function searchFilm(event) {
     '',
     `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
   );
-
-  window.onpopstate = event => {
-    console.log('onpopstate', filmService.pageStatus);
-  };
 
   if (filmService.searchQuery === '') {
     wrongInputNotification.textContent =
@@ -112,6 +118,7 @@ function searchFilm(event) {
 
   showFilms();
   formRef.reset();
+  form.reset();
 }
 
 function sliceDate(films) {

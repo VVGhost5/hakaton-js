@@ -15,6 +15,11 @@ import handleFilmDetailPage from './filmDetailPage';
 import { filmPagination, filmsArrayFromPagination } from './pagination';
 import { showLoader } from './errorLoader';
 import filmService from './search-section';
+import {
+  savedFocusHomeLibrary,
+  focusHomeHandler,
+  focusLibraryHandler,
+} from './home-library-btns-service';
 
 const mainRef = document.querySelector('.main-js');
 let watchedArrayFromLocalStorage = JSON.parse(
@@ -82,6 +87,15 @@ function createFilmDetailPage(film) {
 const router = createRouter()
   .get('/hakaton-js', (req, context) => {
     createHomepageMarkup();
+
+    const homeWrapper = document.querySelector('.home-wrapper-js');
+    const libraryWrapper = document.querySelector('.library-wrapper-js');
+    if (!homeWrapper.classList.contains('active')) {
+      homeWrapper.classList.add('active');
+      libraryWrapper.classList.remove('active');
+      localStorage.setItem('focusedLinkOnHomepage', 'home');
+    }
+
     const formRef = document.querySelector('.search-form');
     formRef.addEventListener('submit', searchFilm);
 
