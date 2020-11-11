@@ -32,12 +32,13 @@ function showFilms() {
       const counterRef = document.querySelector('#counter');
       counterRef.classList.remove('display-none');
 
-      window.history.pushState(
-        '',
-        '',
-        `?query=${filmService.query}&page=${filmService.pageStatus}`,
-      );
+      const state = { page: filmService.pageStatus };
 
+      window.history.pushState(
+        state,
+        '',
+        `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
+     
       wrongInputNotification.textContent = '';
 
       if (
@@ -62,6 +63,10 @@ function searchFilm(event) {
   event.preventDefault();
 
   const filmsRef = document.querySelector('.gallery-list');
+  
+  const incrementBtnRef = document.querySelector(
+    "button[data-counter='increment']",
+  );
   const counterRef = document.querySelector('#counter');
   const incrementBtnRef = document.querySelector(
     "button[data-counter='increment']",
@@ -73,10 +78,12 @@ function searchFilm(event) {
   const form = event.currentTarget;
   filmService.query = form.elements.query.value.trim();
 
+  const state = { page: filmService.pageStatus };
+
   window.history.pushState(
+    state,
     '',
-    '',
-    `?query=${filmService.query}&page=${filmService.pageStatus}`,
+    `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
   );
 
   if (filmService.searchQuery === '') {
@@ -110,6 +117,7 @@ function searchFilm(event) {
   filmsRef.innerHTML = ' ';
 
   showFilms();
+  formRef.reset();
   form.reset();
 }
 

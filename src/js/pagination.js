@@ -25,10 +25,12 @@ function filmPagination() {
         createHomepageFilmGalleryMarkup(data.results);
         valueRef.textContent = filmService.pageStatus;
 
+        const state = { page: filmService.pageStatus };
+
         window.history.pushState(
+          state,
           '',
-          '',
-          `?query=${filmService.query}&page=${filmService.pageStatus}`,
+          `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
         );
 
         if (filmService.pageStatus < data.total_pages) {
@@ -56,10 +58,12 @@ function filmPagination() {
         createHomepageFilmGalleryMarkup(data.results);
         valueRef.textContent = filmService.pageStatus;
 
+        const state = { page: filmService.pageStatus };
+
         window.history.pushState(
+          state,
           '',
-          '',
-          `?query=${filmService.query}&page=${filmService.pageStatus}`,
+          `hakaton-js?query=${filmService.query}&page=${filmService.pageStatus}`,
         );
 
         if (filmService.pageStatus === 1) {
