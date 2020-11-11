@@ -8,6 +8,7 @@ import { toggleButtonStyleinLibrary, savedChoice } from './renderLibrary';
 import {
   filmsArray,
   showFilms,
+  savedFocusHomeLibrary,
   searchFilm,
 } from './searchAndPaginationHomePage';
 import handleFilmDetailPage from './filmDetailPage';
@@ -84,7 +85,8 @@ function createFilmDetailPage(film) {
 }
 
 const router = createRouter()
-  .get('/', (req) => {
+
+  .get('/hakaton-js', (req, context) => {
     createHomepageMarkup();
 
     const homeWrapper = document.querySelector('.home-wrapper-js');
@@ -110,18 +112,18 @@ const router = createRouter()
     filmPagination();
     req.stop();
   })
-  .get('/library', (req, context) => {
+  .get('/hakaton-js/library', (req, context) => {
     createLibraryMarkup();
     savedChoice();
     req.stop();
   })
-  .get('/library/watch', (req, context) => {
+  .get('/hakaton-js/library/watch', (req, context) => {
     localStorage.setItem('focused', 'watch');
     toggleButtonStyleinLibrary();
     createWatchMarkup();
     req.stop();
   })
-  .get('/library/queue', (req, context) => {
+  .get('/hakaton-js/library/queue', (req, context) => {
     localStorage.setItem('focused', 'queue');
     toggleButtonStyleinLibrary();
     createQueueMarkup();
